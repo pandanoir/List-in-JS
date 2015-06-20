@@ -93,6 +93,8 @@ ok(a.intersperse(0).equals(new List([1, 0, 2, 0, 3])), '.intersperse()');
 ok(new List([1, 2, 3]).map(List.pure).intercalate(List.of(0)).equals(new List([1, 0, 2, 0, 3])), '.intersperse()');
 ok(new List([[1, 2], [3, 4]]).transpose().equals(new List([[1, 3], [2, 4]])), '.intersperse()');
 ok(new List([[1, 2, 3], [4, 5, 6], [7, 8, 9, 10]]).transpose().equals(new List([[1, 4, 7], [2, 5, 8], [3, 6, 9], [10]])), '.intersperse()');
+ok(new List([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).foldl1(function(a, b) {return a-b}) === -53);
+ok(new List([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).foldr1(function(a, b) {return a-b}) === -5);
 
 testResult();
 

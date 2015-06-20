@@ -83,9 +83,15 @@ List.fn.foldr = function(f, acc) {
     if (this.value.length === 0) return acc;
     return f(this.head(), this.tail().foldr(f, acc));
 };
+List.fn.foldr1 = function(f, acc) {
+    return this.init().foldr(f, this.last());
+};
 List.fn.foldl = List.fn.reduce = function(f, acc) {
     if (this.value.length === 0) return acc;
     return this.tail().foldl(f, f(acc, this.head()));
+};
+List.fn.foldl1 = function(f, acc) {
+    return this.tail().foldl(f, this.head());
 };
 List.fn.head = function() {
     return this.value[0];
@@ -198,10 +204,10 @@ module.exports = List;
 // permutations 
 // - foldl 
 // foldl' 
-// foldl1 
+// - foldl1 
 // foldl1' 
 // - foldr 
-// foldr1 
+// - foldr1 
 // - concat 
 // concatMap 
 // - and 
