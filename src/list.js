@@ -60,9 +60,6 @@ List.fn.equals = function(b) {
     };
     return isEquals(this.value, b.value);
 };
-List.fn.chain = function(f) {
-    return List.concat(this.map(f));
-};
 List.fn.traverse = function(f, of) {
     return this.map(f).sequence(of);
 }
@@ -92,6 +89,10 @@ List.fn.foldl = List.fn.reduce = function(f, acc) {
 };
 List.fn.foldl1 = function(f, acc) {
     return this.tail().foldl(f, this.head());
+};
+
+List.fn.chain = List.fn.concatMap = function(f){
+    return List.concat(this.map(f));
 };
 List.fn.head = function() {
     return this.value[0];
@@ -209,7 +210,7 @@ module.exports = List;
 // - foldr 
 // - foldr1 
 // - concat 
-// concatMap 
+// - concatMap 
 // - and 
 // - or 
 // - any 
