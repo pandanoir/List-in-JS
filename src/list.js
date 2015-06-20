@@ -166,7 +166,7 @@ List.fn.intersperse = function(s) {
 List.fn.intercalate = function(s) {
     return List.concat(this.intersperse(s));
 };
-List.fn.transpose = function(){
+List.fn.transpose = function() {
     var max = this.map(function(item) {return item.length;}).maximum();
     var res=[];
     for (var i = 0; i < max; i++) {
@@ -193,7 +193,7 @@ module.exports = List;
 // - reverse 
 // - intersperse 
 // - intercalate 
-// transpose 
+// - transpose 
 // subsequences 
 // permutations 
 // - foldl 
