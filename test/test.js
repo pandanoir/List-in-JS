@@ -89,8 +89,10 @@ ok(a.sum() === 6 && b.sum() === 15 && c.sum() === 24, '.sum()'); // sum
 ok(a.product() === 6 && b.product() === 120 && c.product() === 504, '.product()'); // product
 ok(a.maximum() === 3 && a.reverse().maximum() === 3, '.maximum()');
 ok(a.minimum() === 1 && a.reverse().minimum() === 1, '.maximum()');
-ok(a.intersperse(0).equals(new List([1,0,2,0,3])),'.intersperse()');
-ok(new List([1,2,3]).map(List.pure).intercalate(List.of(0)).equals(new List([1,0,2,0,3])),'.intersperse()');
+ok(a.intersperse(0).equals(new List([1, 0, 2, 0, 3])), '.intersperse()');
+ok(new List([1, 2, 3]).map(List.pure).intercalate(List.of(0)).equals(new List([1, 0, 2, 0, 3])), '.intersperse()');
+ok(new List([[1, 2], [3, 4]]).transpose().equals(new List([[1, 3], [2, 4]])), '.intersperse()');
+ok(new List([[1, 2, 3], [4, 5, 6], [7, 8, 9, 10]]).transpose().equals(new List([[1, 4, 7], [2, 5, 8], [3, 6, 9], [10]])), '.intersperse()');
 
 testResult();
 

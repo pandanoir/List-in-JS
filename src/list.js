@@ -166,6 +166,19 @@ List.fn.intersperse = function(s) {
 List.fn.intercalate = function(s) {
     return List.concat(this.intersperse(s));
 };
+List.fn.transpose = function(){
+    var max = this.map(function(item) {return item.length;}).maximum();
+    var res=[];
+    for (var i = 0; i < max; i++) {
+        res[i] = [];
+        for (var j = 0, _j = this.length(); j < _j; j++) {
+            if (this.value[j] && this.value[j][i]) {
+                res[i].push(this.value[j][i]);
+            }
+        }
+    }
+    return new List(res);
+};
 module.exports = List;
 
 // basic functions
