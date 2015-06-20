@@ -223,4 +223,12 @@ List.fn.dropWhile = function(f) {
     }
     return this;
 };
+List.fn.inits = function() {
+    if (this.length() === 0) return List.of(this);
+    return this.init().inits().concat(List.of(this));
+};
+List.fn.tails = function() {
+    if (this.length() === 0) return List.of(this);
+    return List.of(this).concat(this.tail().tails());
+};
 module.exports = List;

@@ -104,6 +104,8 @@ ok(oneToTen.take(3).equals(new List([1, 2, 3])), '.take()');
 ok(oneToTen.drop(4).equals(new List([5, 6, 7, 8, 9, 10])), '.drop()');
 ok(oneToTen.takeWhile(smallerThan(4)).equals(new List([1, 2, 3])), '.takeWhile()');
 ok(oneToTen.dropWhile(smallerThan(4)).equals(new List([4, 5, 6, 7, 8, 9, 10])), '.dropWhile()');
+ok(a.inits().equals(new List([[], [1], [1, 2], [1, 2, 3]]).map(List.of)), '.inits()');
+ok(a.tails().equals(new List([[1, 2, 3], [1, 2], [1], []]).map(List.of)), '.tails()');
 
 testResult();
 

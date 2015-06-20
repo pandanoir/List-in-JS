@@ -50,8 +50,8 @@ span
 break
 stripPrefix
 group
-inits
-tails
+- inits
+- tails
 isPrefixOf
 isSuffixOf
 isInfixOf
