@@ -101,7 +101,9 @@ ok(a.subsequences().equals(new List([[], [1], [2], [1, 2], [3], [1, 3], [2, 3], 
 ok(new List([8, 12, 24, 4]).scanr(function(a, b){return b / a;}, 2).equals(new List([8, 1, 12, 2, 2])), '.scanr() 1');
 ok(new List([3, 6, 12, 4, 55, 11]).scanr(Math.max, 18).equals(new List([55, 55, 55, 55, 55, 18, 18])), '.scanr() 2');
 ok(oneToTen.take(3).equals(new List([1, 2, 3])), '.take()');
-ok(oneToTen.drop(4).equals(new List([5, 6, 7, 8, 9, 10])), '.take()');
+ok(oneToTen.drop(4).equals(new List([5, 6, 7, 8, 9, 10])), '.drop()');
+ok(oneToTen.takeWhile(smallerThan(4)).equals(new List([1, 2, 3])), '.takeWhile()');
+ok(oneToTen.dropWhile(smallerThan(4)).equals(new List([4, 5, 6, 7, 8, 9, 10])), '.dropWhile()');
 
 testResult();
 

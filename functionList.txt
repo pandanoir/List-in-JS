@@ -43,8 +43,8 @@ unfoldr
 - take
 - drop
 splitAt
-takeWhile
-dropWhile
+- takeWhile
+- dropWhile
 dropWhileEnd
 span
 break

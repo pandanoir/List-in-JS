@@ -211,4 +211,16 @@ List.fn.drop = function(n) {
     if (n === 0) return this;
     return this.tail().drop(n-1);
 };
+List.fn.takeWhile = function(f) {
+    if (f(this.head())) {
+        return List.of(this.head()).concat(this.tail().takeWhile(f));
+    }
+    return List.empty();
+};
+List.fn.dropWhile = function(f) {
+    if (f(this.head())) {
+        return this.tail().dropWhile(f);
+    }
+    return this;
+};
 module.exports = List;
