@@ -207,4 +207,8 @@ List.fn.take = function(n) {
     if (n === 0) return List.empty();
     return List.of(this.head()).concat(this.tail().take(n - 1));
 };
+List.fn.drop = function(n) {
+    if (n === 0) return this;
+    return this.tail().drop(n-1);
+};
 module.exports = List;
