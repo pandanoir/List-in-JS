@@ -1,8 +1,10 @@
 var objToString = Object.prototype.toString;
+function isArray(arr){
+    return typeof arr.length === 'number' && !!arr && typeof arr === 'object' && objToString.call(arr) === '[object Array]';
+}
+
 var List = function(arr) {
-    if (!(typeof arr.length === 'number' &&
-       !!arr && typeof arr === 'object' && 
-           objToString.call(arr) === '[object Array]')) {
+    if (!isArray(arr)) {
         throw Error('expect array.got ' + arr);
         return;
     }
@@ -48,7 +50,7 @@ List.fn.equals = function(b) {
         if (a.length !== b.length) return false;
         for (var i = 0, _i = a.length; i < _i; i++) {
             if (objToString.call(a[i]) !== objToString.call(b[i])) return false;
-            if (objToString.call(a[i]) === '[object Array]') {
+            if (isArray(a[i])) {
                 if (!isEquals(a[i], b[i])) return false;
             } else {
                 if (a[i] !== b[i]) return false;
@@ -59,11 +61,7 @@ List.fn.equals = function(b) {
     return isEquals(this.value, b.value);
 };
 List.fn.chain = function(f) {
-    var res = new Array(this.value.length);
-    for (var i = 0, _i = this.value.length; i < _i; i++) {
-        res[i] = (f(this.value[i]));
-    }
-    return List.concat(res);
+    return List.concat(this.map(f));
 };
 List.fn.traverse = function(f, of) {
     return this.map(f).sequence(of);
@@ -156,12 +154,11 @@ List.fn.minimum = function() {
 List.pure = function(x) {
     return new List([x]);
 };
-List.concat = function(arr) {
-    if (arr.length === 0) return List.empty();
-    return arr[0].concat(List.concat(arr.slice(1)));
+List.concat = function(list) {
+    if (list.length() === 0) return List.empty();
+    return list.head().concat(List.concat(list.tail()));
 };
 module.exports = List;
-
 
 // basic functions
 // the implemented item has '-' on its head.
