@@ -1,6 +1,6 @@
 var objToString = Object.prototype.toString;
 function isArray(arr) {
-    return typeof arr.length === 'number' && !!arr && typeof arr === 'object' && objToString.call(arr) === '[object Array]';
+    return !!arr && typeof arr.length === 'number' && typeof arr === 'object' && objToString.call(arr) === '[object Array]';
 };
 var List = function(arr) {
     if (!isArray(arr)) {
@@ -93,9 +93,14 @@ List.fn.foldl = List.fn.reduce = function(f, acc) {
 List.fn.foldl1 = function(f, acc) {
     return this.tail().foldl(f, this.head());
 };
+List.fn.scanr = function(f, acc) {
+    return this.foldr(function(x, acc) {
+        return List.of(f(acc.head(), x)).concat(acc);
+    },List.of(acc));
+};
 List.fn.scanl = function(f, acc) {
     return this.foldl(function(acc, x) {
-        return acc.concat(List.of(f(acc.last(),x)));
+        return acc.concat(List.of(f(acc.last(), x)));
     },List.of(acc));
 };
 List.fn.chain = List.fn.concatMap = function(f) {

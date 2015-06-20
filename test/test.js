@@ -98,6 +98,8 @@ ok(oneToTen.foldl1(function(a, b) {return a - b}) === -53, '.foldl1()');
 ok(oneToTen.foldr1(function(a, b) {return a - b}) === -5, 'foldr1()');
 ok(oneToTen.scanl(function(a, b) {return a + b}, 0).equals(new List([0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55])), '.scanl()');
 ok(a.subsequences().equals(new List([[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]).map(List.of)), '.subsequences()');
+ok(new List([8, 12, 24, 4]).scanr(function(a, b){return b / a;}, 2).equals(new List([8, 1, 12, 2, 2])), '.scanr() 1');
+ok(new List([3, 6, 12, 4, 55, 11]).scanr(Math.max, 18).equals(new List([55, 55, 55, 55, 55, 18, 18])), '.scanr() 2');
 
 testResult();
 
