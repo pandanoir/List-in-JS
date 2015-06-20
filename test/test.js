@@ -15,6 +15,7 @@ var passed = 0, failed = 0, done = 0;
 var a = new List([1, 2, 3]),
     b = new List([4, 5, 6]),
     c = new List([7, 8, 9]),
+    oneToTen = new List([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]),
     a1 = a, a2 = a, a3 = a,
     f1 = new List([c_add(1), c_add(2), c_add(3)]),
     f2 = new List([c_add]).ap(new List([1, 2, 3])),
@@ -85,7 +86,7 @@ ok(a.any(isOdd) === true, '.any() 1'); // any
 ok(a.any(biggerThan(10000)) === false, '.any() 2'); // any
 ok(a.all(isOdd) === false, '.all() 1'); // all
 ok(a.all(smallerThan(10000)) === true, '.all() 2'); // all
-ok(a.sum() === 6 && b.sum() === 15 && c.sum() === 24, '.sum()'); // sum
+ok(oneToTen.sum() === 55, '.sum()'); // sum
 ok(a.product() === 6 && b.product() === 120 && c.product() === 504, '.product()'); // product
 ok(a.maximum() === 3 && a.reverse().maximum() === 3, '.maximum()');
 ok(a.minimum() === 1 && a.reverse().minimum() === 1, '.maximum()');
@@ -93,8 +94,9 @@ ok(a.intersperse(0).equals(new List([1, 0, 2, 0, 3])), '.intersperse()');
 ok(new List([1, 2, 3]).map(List.pure).intercalate(List.of(0)).equals(new List([1, 0, 2, 0, 3])), '.intersperse()');
 ok(new List([[1, 2], [3, 4]]).transpose().equals(new List([[1, 3], [2, 4]])), '.intersperse()');
 ok(new List([[1, 2, 3], [4, 5, 6], [7, 8, 9, 10]]).transpose().equals(new List([[1, 4, 7], [2, 5, 8], [3, 6, 9], [10]])), '.intersperse()');
-ok(new List([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).foldl1(function(a, b) {return a-b}) === -53);
-ok(new List([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).foldr1(function(a, b) {return a-b}) === -5);
+ok(oneToTen.foldl1(function(a, b) {return a - b}) === -53, '.foldl1()');
+ok(oneToTen.foldr1(function(a, b) {return a - b}) === -5, 'foldr1()');
+ok(oneToTen.scanl(function(a, b) {return a + b},0).equals(new List([0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55])), '.scanl()');
 
 testResult();
 

@@ -90,7 +90,11 @@ List.fn.foldl = List.fn.reduce = function(f, acc) {
 List.fn.foldl1 = function(f, acc) {
     return this.tail().foldl(f, this.head());
 };
-
+List.fn.scanl = function(f, acc) {
+    return this.foldl(function(acc, x) {
+        return acc.concat(List.of(f(acc.last(),x)));
+    },List.of(acc));
+};
 List.fn.chain = List.fn.concatMap = function(f){
     return List.concat(this.map(f));
 };
