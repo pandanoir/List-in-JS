@@ -158,6 +158,11 @@ List.concat = function(list) {
     if (list.length() === 0) return List.empty();
     return list.head().concat(List.concat(list.tail()));
 };
+List.fn.intersperse = function(s) {
+    if (this.length() === 0) return List.empty();
+    if (this.length() === 1) return this;
+    return new List([this.head(), s]).concat(this.tail().intersperse(s));
+};
 module.exports = List;
 
 // basic functions
@@ -170,7 +175,7 @@ module.exports = List;
 // - length 
 // - map 
 // - reverse 
-// intersperse 
+// - intersperse 
 // intercalate 
 // transpose 
 // subsequences 

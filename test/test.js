@@ -89,6 +89,7 @@ ok(a.sum() === 6 && b.sum() === 15 && c.sum() === 24, '.sum()'); // sum
 ok(a.product() === 6 && b.product() === 120 && c.product() === 504, '.product()'); // product
 ok(a.maximum() === 3 && a.reverse().maximum() === 3, '.maximum()');
 ok(a.minimum() === 1 && a.reverse().minimum() === 1, '.maximum()');
+ok(a.intersperse(0).equals(new List([1,0,2,0,3])),'.intersperse()');
 
 testResult();
 
