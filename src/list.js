@@ -48,11 +48,15 @@ List.fn.equals = function(b) {
     function isEquals(a, b) {
         if (a.length !== b.length) return false;
         for (var i = 0, _i = a.length; i < _i; i++) {
-            if (objToString.call(a[i]) !== objToString.call(b[i])) return false;
-            if (isArray(a[i])) {
-                if (!isEquals(a[i], b[i])) return false;
+            if (a[i] && typeof a[i].equals === 'function') {
+                if (a[i].equals(b[i])) return false;
             } else {
-                if (a[i] !== b[i]) return false;
+                if (objToString.call(a[i]) !== objToString.call(b[i])) return false;
+                if (isArray(a[i])) {
+                    if (!isEquals(a[i], b[i])) return false;
+                } else {
+                    if (a[i] !== b[i]) return false;
+                }
             }
         }
         return true;
@@ -188,5 +192,10 @@ List.fn.transpose = function() {
         }
     }
     return new List(res);
+};
+List.fn.subsequences = function() {
+    return this.foldl(function(acc, x) {
+        return acc.concat(acc.map(function(item) {return item.concat(List.of(x))}));
+    }, new List([List.empty()]));
 };
 module.exports = List;

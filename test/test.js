@@ -96,7 +96,8 @@ ok(new List([[1, 2], [3, 4]]).transpose().equals(new List([[1, 3], [2, 4]])), '.
 ok(new List([[1, 2, 3], [4, 5, 6], [7, 8, 9, 10]]).transpose().equals(new List([[1, 4, 7], [2, 5, 8], [3, 6, 9], [10]])), '.intersperse()');
 ok(oneToTen.foldl1(function(a, b) {return a - b}) === -53, '.foldl1()');
 ok(oneToTen.foldr1(function(a, b) {return a - b}) === -5, 'foldr1()');
-ok(oneToTen.scanl(function(a, b) {return a + b},0).equals(new List([0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55])), '.scanl()');
+ok(oneToTen.scanl(function(a, b) {return a + b}, 0).equals(new List([0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55])), '.scanl()');
+ok(a.subsequences().equals(new List([[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]).map(List.of)), '.subsequences()');
 
 testResult();
 
