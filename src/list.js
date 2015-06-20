@@ -203,4 +203,8 @@ List.fn.subsequences = function() {
         return acc.concat(acc.map(function(item) {return item.concat(List.of(x))}));
     }, new List([List.empty()]));
 };
+List.fn.take = function(n) {
+    if (n === 0) return List.empty();
+    return List.of(this.head()).concat(this.tail().take(n - 1));
+};
 module.exports = List;

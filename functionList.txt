@@ -40,7 +40,7 @@ repeat
 replicate
 cycle
 unfoldr
-take
+- take
 drop
 splitAt
 takeWhile
