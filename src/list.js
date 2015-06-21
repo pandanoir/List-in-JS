@@ -113,7 +113,7 @@ List.fn.intersperse = function(s) {
     if (this.length() === 1) return this;
     return new List([this.head(), s]).concat(this.tail().intersperse(s));
 };
-List.fn.isnull = List.fn['null'] function() {
+List.fn.isnull = List.fn['null'] = function() {
     return this.equals(List.empty());
 };
 List.fn.last = function() {
