@@ -8,7 +8,7 @@ var List = function(_arr) {
         return;
     }
     var arr = new Array(_arr.length);
-    for(var i=0,_i=_arr.length;i<_i;i++){
+    for (var i = 0, _i = _arr.length; i < _i; i++) {
         if (isArray(_arr[i])) {
             arr[i] = new List(_arr[i]);
         } else {
@@ -54,7 +54,7 @@ List.fn.concat = function(b) {
 };
 List.fn.drop = function(n) {
     if (n === 0) return this;
-    return this.tail().drop(n-1);
+    return this.tail().drop(n - 1);
 };
 List.fn.dropWhile = function(f) {
     if (f(this.head())) {
@@ -174,21 +174,21 @@ List.fn.reverse = function() {
 List.fn.scanl = function(f, acc) {
     return this.foldl(function(acc, x) {
         return acc.concat(List.of(f(acc.last(), x)));
-    },List.of(acc));
+    }, List.of(acc));
 };
 List.fn.scanr = function(f, acc) {
     return this.foldr(function(x, acc) {
         return List.of(f(acc.head(), x)).concat(acc);
-    },List.of(acc));
+    }, List.of(acc));
 };
 List.fn.sequence = function(of) {
-     return this.foldr(function(m, ma) {
-         return m.chain(function(x) {
-             if (ma.value.length === 0) return List.pure(x);
-             return ma.chain(function(xs) {
-                 return List.pure(List.of(x).concat(xs));
-             });
-         })
+    return this.foldr(function(m, ma) {
+        return m.chain(function(x) {
+            if (ma.value.length === 0) return List.pure(x);
+            return ma.chain(function(xs) {
+                return List.pure(List.of(x).concat(xs));
+            });
+        })
     }, new List([[]]));
 };
 List.fn.subsequences = function() {
@@ -223,7 +223,7 @@ List.fn.toArray = function() {
 };
 List.fn.transpose = function() {
     var max = this.map(function(item) {return item.length();}).maximum();
-    var res=[];
+    var res = [];
     for (var i = 0; i < max; i++) {
         res[i] = [];
         for (var j = 0, _j = this.length(); j < _j; j++) {
