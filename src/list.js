@@ -2,10 +2,18 @@ var objToString = Object.prototype.toString;
 function isArray(arr) {
     return !!arr && typeof arr.length === 'number' && typeof arr === 'object' && objToString.call(arr) === '[object Array]';
 };
-var List = function(arr) {
-    if (!isArray(arr)) {
-        throw Error('expect array.got ' + arr);
+var List = function(_arr) {
+    if (!isArray(_arr)) {
+        throw Error('expect array.got ' + _arr);
         return;
+    }
+    var arr = new Array(_arr.length);
+    for(var i=0,_i=_arr.length;i<_i;i++){
+        if (isArray(_arr[i])) {
+            arr[i] = new List(_arr[i]);
+        } else {
+            arr[i] = _arr[i];
+        }
     }
     this.value = arr;
     return this;
@@ -62,7 +70,7 @@ List.fn.equals = function(b) {
         if (a.length !== b.length) return false;
         for (var i = 0, _i = a.length; i < _i; i++) {
             if (a[i] && typeof a[i].equals === 'function') {
-                if (a[i].equals(b[i])) return false;
+                if (!a[i].equals(b[i])) return false;
             } else {
                 if (objToString.call(a[i]) !== objToString.call(b[i])) return false;
                 if (isArray(a[i])) {
@@ -178,9 +186,7 @@ List.fn.sequence = function(of) {
          return m.chain(function(x) {
              if (ma.value.length === 0) return List.pure(x);
              return ma.chain(function(xs) {
-                 var res = xs.concat();
-                 res.unshift(x);
-                 return List.pure(res);
+                 return List.pure(List.of(x).concat(xs));
              });
          })
     }, new List([[]]));
@@ -216,13 +222,13 @@ List.fn.toArray = function() {
     }, []);
 };
 List.fn.transpose = function() {
-    var max = this.map(function(item) {return item.length;}).maximum();
+    var max = this.map(function(item) {return item.length();}).maximum();
     var res=[];
     for (var i = 0; i < max; i++) {
         res[i] = [];
         for (var j = 0, _j = this.length(); j < _j; j++) {
-            if (this.value[j] && this.value[j][i]) {
-                res[i].push(this.value[j][i]);
+            if (this.value[j] && this.value[j].value && this.value[j].value[i]) {
+                res[i].push(this.value[j].value[i]);
             }
         }
     }
