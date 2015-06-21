@@ -231,5 +231,4 @@ List.fn.transpose = function() {
 List.fn.traverse = function(f, of) {
     return this.map(f).sequence(of);
 };
-console.log(Object.keys(List.fn).sort());
 module.exports = List;
