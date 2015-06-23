@@ -215,6 +215,9 @@ List.fn.takeWhile = function(f) {
 };
 List.fn.toArray = function() {
     return this.reduce(function(acc, x) {
+        if (x instanceof List) {
+            return acc.concat([x.toArray()]);
+        }
         return acc.concat(x);
     }, []);
 };

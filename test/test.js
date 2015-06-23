@@ -70,6 +70,7 @@ ok(new List([[1, 2], [3], [4]]).sequence(), new List([[1, 3, 4], [2, 3, 4]]), 't
 
 // foldr
 // foldl
+ok(JSON.stringify(new List([[1, 2], [3, 4], [5, 6]]).toArray()), JSON.stringify([[1, 2], [3, 4], [5, 6]]), '.toArray()');
 ok(a.head(), 1, '.head()'); // head
 ok(a.tail(), new List([2, 3]), '.tail()'); // tail
 ok(a.last(), 3, '.head()'); // last
