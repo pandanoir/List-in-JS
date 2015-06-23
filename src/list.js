@@ -1,6 +1,6 @@
 var objToString = Object.prototype.toString;
 function isArray(arr) {
-    return !!arr && typeof arr.length === 'number' && typeof arr === 'object' && objToString.call(arr) === '[object Array]';
+    return !!arr && typeof arr === 'object' && objToString.call(arr) === '[object Array]' && typeof arr.length === 'number';
 };
 var List = function(_arr) {
     if (!isArray(_arr)) {
@@ -69,17 +69,14 @@ List.fn.equals = function(b) {
     function isEquals(a, b) {
         if (a.length !== b.length) return false;
         for (var i = 0, _i = a.length; i < _i; i++) {
-            if (a[i] && typeof a[i].equals === 'function') {
-                if (!a[i].equals(b[i])) return false;
-            } else {
-                if (objToString.call(a[i]) !== objToString.call(b[i])) return false;
-                if (isArray(a[i])) {
-                    if (!isEquals(a[i], b[i])) return false;
-                } else {
-                    if (a[i] !== b[i]) return false;
-                }
+            if (objToString.call(a[i]) !== objToString.call(b[i])) return false;
+            if (a[i] && typeof a[i].equals === 'function' && !a[i].equals(b[i])) {
+                return false;
+            } else if (isArray(a[i]) && !isEquals(a[i], b[i])) {
+                return false;
+            } else if (a[i] !== b[i]) {
+                return false;
             }
-        }
         return true;
     };
     return isEquals(this.value, b.value);
