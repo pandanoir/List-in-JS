@@ -70,13 +70,14 @@ List.fn.equals = function(b) {
         if (a.length !== b.length) return false;
         for (var i = 0, _i = a.length; i < _i; i++) {
             if (objToString.call(a[i]) !== objToString.call(b[i])) return false;
-            if (a[i] && typeof a[i].equals === 'function' && !a[i].equals(b[i])) {
-                return false;
-            } else if (isArray(a[i]) && !isEquals(a[i], b[i])) {
-                return false;
-            } else if (a[i] !== b[i]) {
-                return false;
+            if (a[i] && typeof a[i].equals === 'function') {
+                if (!a[i].equals(b[i])) return false;
+            } else if (isArray(a[i])) {
+                if (!isEquals(a[i], b[i])) return false;
+            } else {
+                if (a[i] !== b[i]) return false;
             }
+        }
         return true;
     };
     return isEquals(this.value, b.value);
@@ -128,6 +129,9 @@ List.fn.length = function() {
     return this.value.length;
 };
 List.fn.map = function(f) {
+    if (typeof this.value.map === 'function') {
+        return new List(this.value.map(function(x) {return f(x)}));
+    }
     var res = new Array(this.value.length);
     for (var i = 0, _i = res.length; i < _i; i++) {
         res[i] = f(this.value[i]);
