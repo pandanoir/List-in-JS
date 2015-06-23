@@ -28,13 +28,13 @@ List.concat = function(list) {
 };
 
 List.fn.all = function(f) {
-    return this.filter(function(item) {return !f(item);}).length() === 0;
+    return this.map(f).and();
 };
 List.fn.and = function() {
-    return this.all(function(s) {return s === true;});
+    return this.foldl(function(a, b) {return a && b;}, true);
 };
 List.fn.any = function(f) {
-    return this.filter(f).length() > 0;
+    return this.map(f).or();
 };
 List.fn.ap = function(b) {
     var bLength = b.value.length;
@@ -131,9 +131,6 @@ List.fn.length = function() {
     return this.value.length;
 };
 List.fn.map = function(f) {
-    if (typeof this.value.map === 'function') {
-        return new List(this.value.map(f));
-    }
     var res = new Array(this.value.length);
     for (var i = 0, _i = res.length; i < _i; i++) {
         res[i] = f(this.value[i]);
@@ -155,14 +152,14 @@ List.fn.minimum = function() {
     else return this.head();
 };
 List.of = List.fn.of = function() {
-    var args = new Array(arguments);
+    var args = new Array(arguments.length);
     for (var i = 0, _i = args.length; i < _i; i++) {
         args[i] = arguments[i];
     }
     return new List(args);
 };
 List.fn.or = function() {
-    return this.any(function(s) {return s === true;});
+    return this.foldl(function(a, b) {return a || b;}, false);
 };
 List.fn.product = function() {
     return this.foldl(function(a, b) {return a * b;}, 1);
