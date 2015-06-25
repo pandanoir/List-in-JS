@@ -129,9 +129,6 @@ List.fn.length = function() {
     return this.value.length;
 };
 List.fn.map = function(f) {
-    if (typeof this.value.map === 'function') {
-        return new List(this.value.map(function(x) {return f(x)}));
-    }
     var res = new Array(this.value.length);
     for (var i = 0, _i = res.length; i < _i; i++) {
         res[i] = f(this.value[i]);
@@ -238,4 +235,19 @@ List.fn.transpose = function() {
 List.fn.traverse = function(f, of) {
     return this.map(f).sequence(of);
 };
+if (typeof [].map === 'function') {
+    List.fn.map = function(f) {
+        return new List(this.value.map(function(x) {return f(x)}));
+    };
+}
+if (typeof [].reduce === 'function') {
+    List.fn.foldl = List.fn.reduce = function(f, acc) {
+        return this.value.reduce(function(acc, x) {return f(acc, x)}, acc);
+    };
+}
+if (typeof [].reduceRight === 'function') {
+    List.fn.foldr = function(f, acc) {
+        return this.value.reduceRight(function(acc, x) {return f(x, acc)}, acc);
+    };
+}
 module.exports = List;
