@@ -1,6 +1,6 @@
 var objToString = Object.prototype.toString;
 function isArray(arr) {
-    return !!arr && typeof arr === 'object' && objToString.call(arr) === '[object Array]' && typeof arr.length === 'number';
+    return objToString.call(arr) === '[object Array]';
 };
 var List = function(_arr) {
     if (!isArray(_arr)) {
