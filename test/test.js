@@ -111,6 +111,7 @@ ok(a.tails(), new List([[1, 2, 3], [2, 3], [3], []]), '.tails()');
 ok(new List([1, 2, 3, 4, 1, 2, 3, 4]).span(smallerThan(3)), new List([[1, 2], [3, 4, 1, 2, 3, 4]]), '.span() 1');
 ok(new List([1, 2, 3]).span(smallerThan(9)), new List([[1, 2, 3], []]), '.span() 2');
 ok(new List([1, 2, 3]).span(smallerThan(0)), new List([[], [1, 2, 3]]), '.span() 3');
+ok(new List([1, 1, 2, 2, 2, 3, 5]).nub(), new List([1, 2, 3, 5]), '.nub()');
 
 testResult();
 

@@ -158,6 +158,11 @@ List.fn.minimum = function() {
     if (min < this.head()) return min;
     else return this.head();
 };
+List.fn.nub = function() {
+    if (this.length() === 0) return List.empty();
+    var x = this.head(), xs = this.tail();
+    return List.of(x).concat(xs.filter(function(y) {return x !== y}).nub())
+};
 List.of = List.fn.of = function() {
     var args = new Array(arguments.length);
     for (var i = 0, _i = args.length; i < _i; i++) {
