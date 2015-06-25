@@ -4,7 +4,7 @@ the implemented item has '-' on its head.
 - last
 - tail
 - init
-null
+- null
 - length
 - map
 - reverse
@@ -46,7 +46,7 @@ splitAt
 - takeWhile
 - dropWhile
 dropWhileEnd
-span
+- span
 break
 stripPrefix
 group

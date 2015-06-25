@@ -195,6 +195,13 @@ List.fn.sequence = function(of) {
         })
     }, new List([[]]));
 };
+List.fn.span = function(f) {
+    if (f(this.head())) {
+        var res = this.tail().span(f);
+        var ys = res['!!'](0), zs = res['!!'](1);
+        return new List([List.of(this.head()).concat(ys), zs]);
+    } else return new List([[],this]);
+};
 List.fn.subsequences = function() {
     return this.foldl(function(acc, x) {
         return acc.concat(acc.map(function(item) {return item.concat(List.of(x))}));
