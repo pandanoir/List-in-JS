@@ -23,9 +23,10 @@ List.pure = function(x) {
     return new List([x]);
 };
 List.concat = function(list) {
-    if (list.length() === 0) return List.empty();
+    if (list.length() === 0) return List.empty;
     return list.head().concat(List.concat(list.tail()));
 };
+List.empty = new List([]);
 
 // List.fn['!!'] = function(n) {
 //     if (n === 0) return this.head();
@@ -71,8 +72,8 @@ List.fn.dropWhile = function(f) {
     }
     return this;
 };
-List.empty = List.fn.empty = function() {
-    return new List([]);
+List.fn.empty = function() {
+    return List.empty;
 };
 List.fn.equals = function(b) {
     function isEquals(a, b) {
@@ -93,7 +94,7 @@ List.fn.equals = function(b) {
 };
 List.fn.filter = function(f) {
     return this.chain(function(m) {
-        return f(m) ? List.pure(m) : List.empty();
+        return f(m) ? List.pure(m) : List.empty;
     });
 };
 List.fn.foldl = List.fn.reduce = function(f, acc) {
@@ -124,12 +125,12 @@ List.fn.intercalate = function(s) {
     return List.concat(this.intersperse(s));
 };
 List.fn.intersperse = function(s) {
-    if (this.length() === 0) return List.empty();
+    if (this.length() === 0) return List.empty;
     if (this.length() === 1) return this;
     return new List([this.head(), s]).concat(this.tail().intersperse(s));
 };
 List.fn.isnull = List.fn['null'] = function() {
-    return this.equals(List.empty());
+    return this.equals(List.empty);
 };
 List.fn.last = function() {
     return this.value[this.value.length - 1];
@@ -159,7 +160,7 @@ List.fn.minimum = function() {
     else return this.head();
 };
 List.fn.nub = function() {
-    if (this.length() === 0) return List.empty();
+    if (this.length() === 0) return List.empty;
     var x = this.head(), xs = this.tail();
     return List.of(x).concat(xs.filter(function(y) {return x !== y}).nub())
 };
@@ -177,7 +178,7 @@ List.fn.product = function() {
     return this.foldl(function(a, b) {return a * b;}, 1);
 };
 List.fn.reverse = function() {
-    if (this.value.length === 0) return List.empty();
+    if (this.value.length === 0) return List.empty;
     return this.tail().reverse().concat(List.of(this.head()));
 };
 List.fn.scanl = function(f, acc) {
@@ -210,7 +211,7 @@ List.fn.span = function(f) {
 List.fn.subsequences = function() {
     return this.foldl(function(acc, x) {
         return acc.concat(acc.map(function(item) {return item.concat(List.of(x))}));
-    }, new List([List.empty()]));
+    }, new List([List.empty]));
 };
 List.fn.sum = function() {
     return this.foldl(function(a, b) {return a + b;}, 0);
@@ -223,14 +224,14 @@ List.fn.tails = function() {
     return List.of(this).concat(this.tail().tails());
 };
 List.fn.take = function(n) {
-    if (n === 0) return List.empty();
+    if (n === 0) return List.empty;
     return List.of(this.head()).concat(this.tail().take(n - 1));
 };
 List.fn.takeWhile = function(f) {
     if (f(this.head())) {
         return List.of(this.head()).concat(this.tail().takeWhile(f));
     }
-    return List.empty();
+    return List.empty;
 };
 List.fn.toArray = function() {
     return this.reduce(function(acc, x) {

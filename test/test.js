@@ -57,7 +57,7 @@ ok(f1.ap(a.of(x)), a.of(function(f) {return f(x);}).ap(f1), 'interchange');
 ok(a.reduce(add, 0), a.toArray().reduce(add, 0), 'reduce');
 
 //Chain
-ok(a.chain(function(x) {return x % 2 === 0 ? List.of(x) : List.empty()}), List.of(2), 'chain');
+ok(a.chain(function(x) {return x % 2 === 0 ? List.of(x) : List.empty}), List.of(2), 'chain');
 ok(a.of(3).chain(function(x) {return List.of(x * 2)}), (function(x) {return List.of(x * 2)})(3), 'left identity');
 ok(a.chain(a.of), a, 'right identity');
 
@@ -76,7 +76,7 @@ ok(a.tail(), new List([2, 3]), '.tail()'); // tail
 ok(a.last(), 3, '.head()'); // last
 ok(a.init(), new List([1, 2]), '.tail()'); // init
 ok(a.isnull(), false, '.isnull() 1'); // isnull
-ok(List.empty().isnull(), true, '.isnull() 2'); // isnull
+ok(List.empty.isnull(), true, '.isnull() 2'); // isnull
 ok(a.filter(function(x) {return x % 2 === 0}), new List([2]), '.filter()'); // filter
 ok(a.reverse(), new List([3, 2, 1]), '.reverse()'); // reverse
 ok(new List([true, true, true]).and(), true, '.and() 1'); // and
