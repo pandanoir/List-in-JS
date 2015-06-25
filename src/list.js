@@ -72,6 +72,9 @@ List.fn.dropWhile = function(f) {
     }
     return this;
 };
+List.fn.elem = function(x) {
+    return this.any(function(y) {return x === y});
+};
 List.fn.empty = function() {
     return List.empty;
 };

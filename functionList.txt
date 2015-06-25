@@ -55,7 +55,7 @@ group
 isPrefixOf
 isSuffixOf
 isInfixOf
-elem
+- elem
 notElem
 lookup
 find
@@ -88,7 +88,7 @@ lines
 words
 unlines
 unwords
-nub
+- nub
 delete
 (\)
 union
