@@ -27,6 +27,15 @@ List.concat = function(list) {
     return list.head().concat(List.concat(list.tail()));
 };
 
+// List.fn['!!'] = function(n) {
+//     if (n === 0) return this.head();
+//     if (n < 0) throw Error('!! got negative index.');
+//     return this.tail()['!!'](n-1);
+// };
+List.fn['!!'] = function(n) {
+    if (n < 0) throw Error('!! got negative index.');
+    return this.value[n];
+};
 List.fn.all = function(f) {
     return this.map(f).and();
 };
