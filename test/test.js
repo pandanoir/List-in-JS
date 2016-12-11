@@ -121,7 +121,7 @@ function ok(test, expected, label) {
     var res = test === expected;
     if (test.equals && typeof test.equals === 'function')
         res = test.equals(expected);
-    console.log((res ? '[PASS]' : '[FAIL]' + JSON.stringify(test) + ' don\'t equals ' + JSON.stringify(expected)) + label);
+    console.log((res ? '[PASS]' : '[FAIL]' + JSON.stringify(test) + ' doesn\'t equal ' + JSON.stringify(expected)) + label);
     if (res === true)
         passed++;
     else failed++;
