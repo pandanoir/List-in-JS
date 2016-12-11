@@ -47,7 +47,7 @@ splitAt
 - dropWhile
 dropWhileEnd
 - span
-break
+- break
 stripPrefix
 group
 - inits
@@ -89,14 +89,14 @@ words
 unlines
 unwords
 - nub
-delete
+- delete
 (\)
 union
 intersect
 sort
 insert
 nubBy
-deleteBy
+- deleteBy
 deleteFirstsBy
 unionBy
 intersectBy
