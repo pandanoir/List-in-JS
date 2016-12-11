@@ -55,6 +55,12 @@ export default class List {
     concat(b) {
         return new List(this.value.concat(b.value));
     }
+    delete(a) {
+        for (let i = 0, _i = this.length; i < _i; i++) {
+            if (this.value[i] === a) return new List(this.value.slice(0, i).concat(this.value.slice(i + 1)));
+        }
+        return this;
+    }
     drop(n) {
         if (n === 0) return this;
         return this.tail().drop(n - 1);

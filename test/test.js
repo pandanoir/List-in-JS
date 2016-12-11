@@ -224,6 +224,9 @@ describe('list-in-js', () => {
         it('.nub()', () => {
             assert.ok(new List([1, 1, 2, 2, 2, 3, 5]).nub().equals(new List([1, 2, 3, 5])));
         });
+        it('.delete()', () => {
+            assert.ok(new List([...'banana']).delete('a').equals(new List([...'bnana'])));
+        })
         it('.elem()', () => {
             assert.equal(a.elem(1), true);
             assert.equal(a.elem(4), false);
