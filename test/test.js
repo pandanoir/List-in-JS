@@ -115,10 +115,8 @@ describe('list-in-js', () => {
         it('.init()', () => {
             assert.ok(a.init().equals(new List([1, 2])));
         });
-        it('.isnull() 1', () => {
+        it('.isnull()', () => {
             assert.equal(a.isnull(), false);
-        });
-        it('.isnull() 2', () => {
             assert.equal(List.empty.isnull(), true);
         });
         it('.filter()', () => {
@@ -127,28 +125,20 @@ describe('list-in-js', () => {
         it('.reverse()', () => {
             assert.ok(a.reverse().equals(new List([3, 2, 1])));
         });
-        it('.and() 1', () => {
+        it('.and()', () => {
             assert.equal(new List([true, true, true]).and(), true);
-        });
-        it('.and() 2', () => {
             assert.equal(new List([true, true, false]).and(), false);
         });
-        it('.or() 1', () => {
+        it('.or()', () => {
             assert.equal(new List([false, false, false]).or(), false);
-        });
-        it('.or() 2', () => {
             assert.equal(new List([true, false, false]).or(), true);
         });
-        it('.any() 1', () => {
+        it('.any()', () => {
             assert.equal(a.any(isOdd), true);
-        });
-        it('.any() 2', () => {
             assert.equal(a.any(biggerThan(10000)), false);
         });
-        it('.all() 1', () => {
+        it('.all()', () => {
             assert.equal(a.all(isOdd), false);
-        });
-        it('.all() 2', () => {
             assert.equal(a.all(smallerThan(10000)), true);
         });
         it('.sum()', () => {
@@ -160,25 +150,17 @@ describe('list-in-js', () => {
         it('.maximum()', () => {
             assert.equal(a.maximum() === 3 && a.reverse().maximum() === 3, true);
         });
-        it('.maximum()', () => {
+        it('.minimum()', () => {
             assert.equal(a.minimum() === 1 && a.reverse().minimum() === 1, true);
         });
         it('.intersperse()', () => {
             assert.ok(a.intersperse(0).equals(new List([1, 0, 2, 0, 3])));
-        });
-        it('.intersperse()', () => {
             assert.ok(new List([[1], [2], [3]]).intercalate(List.of(0)).equals(new List([1, 0, 2, 0, 3])));
-        });
-        it('.intersperse()', () => {
             assert.ok(new List([[1, 2], [3, 4]]).transpose().equals(new List([[1, 3], [2, 4]])));
-        });
-        it('.intersperse()', () => {
             assert.ok(new List([[1, 2, 3], [4, 5, 6], [7, 8, 9, 10]]).transpose().equals(new List([[1, 4, 7], [2, 5, 8], [3, 6, 9], [10]])));
         });
         it('.foldl1()', () => {
             assert.equal(oneToTen.foldl1((a, b) => a - b), -53);
-        });
-        it('foldr1()', () => {
             assert.equal(oneToTen.foldr1((a, b) => a - b), -5);
         });
         it('.scanl()', () => {
@@ -187,10 +169,8 @@ describe('list-in-js', () => {
         it('.subsequences()', () => {
             assert.ok(a.subsequences().equals(new List([[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]])));
         });
-        it('.scanr() 1', () => {
+        it('.scanr()', () => {
             assert.ok(new List([8, 12, 24, 4]).scanr((a, b) => b / a, 2).equals(new List([8, 1, 12, 2, 2])));
-        });
-        it('.scanr() 2', () => {
             assert.ok(new List([3, 6, 12, 4, 55, 11]).scanr(Math.max, 18).equals(new List([55, 55, 55, 55, 55, 18, 18])));
         });
         it('.take()', () => {
@@ -227,10 +207,8 @@ describe('list-in-js', () => {
         it('.nub()', () => {
             assert.ok(new List([1, 1, 2, 2, 2, 3, 5]).nub().equals(new List([1, 2, 3, 5])));
         });
-        it('.elem() 1', () => {
+        it('.elem()', () => {
             assert.equal(a.elem(1), true);
-        });
-        it('.elem() 1', () => {
             assert.equal(a.elem(4), false);
         });
     });
