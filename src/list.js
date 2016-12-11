@@ -186,9 +186,9 @@ export default class List {
     span(f) {
         if (f(this.head())) {
             const res = this.tail().span(f);
-            const ys = res['!!'](0), zs = res['!!'](1);
-            return new List([List.of(this.head()).concat(ys), zs]);
-        } else return new List([[],this]);
+            const ys = res[0], zs = res[1];
+            return [List.of(this.head()).concat(ys), zs];
+        } else return [List.empty, this];
     }
     subsequences() {
         return this.foldl((acc, x) => acc.concat(acc.map(item => item.concat(List.of(x)))), new List([List.empty]));

@@ -211,14 +211,18 @@ describe('list-in-js', () => {
         it('.tails()', () => {
             assert.ok(a.tails().equals(new List([[1, 2, 3], [2, 3], [3], []])));
         });
-        it('.span() 1', () => {
-            assert.ok(new List([1, 2, 3, 4, 1, 2, 3, 4]).span(smallerThan(3)).equals(new List([[1, 2], [3, 4, 1, 2, 3, 4]])));
-        });
-        it('.span() 2', () => {
-            assert.ok(new List([1, 2, 3]).span(smallerThan(9)).equals(new List([[1, 2, 3], []])));
-        });
-        it('.span() 3', () => {
-            assert.ok(new List([1, 2, 3]).span(smallerThan(0)).equals(new List([[], [1, 2, 3]])));
+        it('.span()', () => {
+            const res1 = new List([1, 2, 3, 4, 1, 2, 3, 4]).span(smallerThan(3));
+            assert.ok(res1[0].equals(new List([1, 2])));
+            assert.ok(res1[1].equals(new List([3, 4, 1, 2, 3, 4])));
+
+            const res2 = new List([1, 2, 3]).span(smallerThan(9));
+            assert.ok(res2[0].equals(new List([1, 2, 3])));
+            assert.ok(res2[1].equals(new List([])));
+
+            const res3 = new List([1, 2, 3]).span(smallerThan(0));
+            assert.ok(res3[0].equals(new List([])));
+            assert.ok(res3[1].equals(new List([1, 2, 3])));
         });
         it('.nub()', () => {
             assert.ok(new List([1, 1, 2, 2, 2, 3, 5]).nub().equals(new List([1, 2, 3, 5])));
