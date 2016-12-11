@@ -61,6 +61,12 @@ export default class List {
         }
         return this;
     }
+    deleteBy(f, x) {
+        for (let i = 0, _i = this.length; i < _i; i++) {
+            if (f(x, this.value[i])) return new List(this.value.slice(0, i).concat(this.value.slice(i + 1)));
+        }
+        return this;
+    }
     drop(n) {
         if (n === 0) return this;
         return this.tail().drop(n - 1);

@@ -132,6 +132,9 @@ describe('list-in-js', () => {
         it('.delete()', () => {
             assert.ok(new List([...'banana']).delete('a').equals(new List([...'bnana'])));
         });
+        it('.deleteBy()', () => {
+            assert.ok(new List([6, 8, 10, 12]).deleteBy((x, y) => y % x === 0, 4).equals(new List([6, 10, 12])));
+        })
         it('.drop()', () => {
             assert.ok(oneToTen.drop(4).equals(new List([5, 6, 7, 8, 9, 10])));
         });
