@@ -14,6 +14,7 @@ export default class List {
             }
         }
         this.value = arr;
+        this.length = arr.length;
     }
     '!!'(n) {
         if (n < 0) throw Error('!! got negative index.');
@@ -110,15 +111,15 @@ export default class List {
         return new List(this.value.slice(0, -1));
     }
     inits() {
-        if (this.length() === 0) return List.of(this.value);
+        if (this.length === 0) return List.of(this.value);
         return this.init().inits().concat(List.of(this.value));
     }
     intercalate(s) {
         return List.concat(this.intersperse(s));
     }
     intersperse(s) {
-        if (this.length() === 0) return List.empty;
-        if (this.length() === 1) return this;
+        if (this.length === 0) return List.empty;
+        if (this.length === 1) return this;
         return new List([this.head(), s]).concat(this.tail().intersperse(s));
     }
     isnull() {
@@ -130,9 +131,6 @@ export default class List {
     }
     last() {
         return this.value[this.value.length - 1];
-    }
-    length() {
-        return this.value.length;
     }
     map(f) {
         const res = new Array(this.value.length);
@@ -156,7 +154,7 @@ export default class List {
         else return this.head();
     }
     nub() {
-        if (this.length() === 0) return List.empty;
+        if (this.length === 0) return List.empty;
         const x = this.head(), xs = this.tail();
         return List.of(x).concat(xs.filter(y => x !== y).nub())
     }
@@ -202,7 +200,7 @@ export default class List {
         return new List(this.value.slice(1));
     }
     tails() {
-        if (this.length() === 0) return List.of(this.value);
+        if (this.length === 0) return List.of(this.value);
         return List.of(this.value).concat(this.tail().tails());
     }
     take(n) {
@@ -224,11 +222,11 @@ export default class List {
         }, []);
     }
     transpose() {
-        const max = this.map(item => item.length()).maximum();
+        const max = this.map(item => item.length).maximum();
         const res = [];
         for (let i = 0; i < max; i++) {
             res[i] = [];
-            for (let j = 0, _j = this.length(); j < _j; j++) {
+            for (let j = 0, _j = this.length; j < _j; j++) {
                 if (this.value[j] && this.value[j].value && this.value[j].value[i]) {
                     res[i].push(this.value[j].value[i]);
                 }
@@ -242,7 +240,7 @@ export default class List {
 };
 List.pure = x => new List([x]);
 List.concat = list => {
-    if (list.length() === 0) return List.empty;
+    if (list.length === 0) return List.empty;
     return list.head().concat(List.concat(list.tail()));
 };
 List.empty = new List([]);
