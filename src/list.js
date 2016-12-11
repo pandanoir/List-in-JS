@@ -1,5 +1,5 @@
 const objToString = Object.prototype.toString;
-class List {
+export default class List {
     constructor(_arr) {
         if (!Array.isArray(_arr)) {
             throw Error('expect array.got ' + _arr);
@@ -268,4 +268,3 @@ if (typeof [].reduceRight === 'function') {
         return this.value.reduceRight((acc, x) => f(x, acc), acc);
     };
 }
-module.exports = List;
