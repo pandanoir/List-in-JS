@@ -204,6 +204,23 @@ describe('list-in-js', () => {
             assert.ok(res3[0].equals(new List([])));
             assert.ok(res3[1].equals(new List([1, 2, 3])));
         });
+        it('.break()', () => {
+            const res1 = new List([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).break(x => x > 4);
+            assert.ok(res1[0].equals(new List([1, 2, 3, 4])));
+            assert.ok(res1[1].equals(new List([5, 6, 7, 8, 9, 10])));
+
+            const res2 = new List([1, 2, 3, 4, 1, 2, 3, 4]).break(x => x > 3);
+            assert.ok(res2[0].equals(new List([1, 2, 3])));
+            assert.ok(res2[1].equals(new List([4, 1, 2, 3, 4])));
+
+            const res3 = new List([1, 2, 3]).break(x => x > 9);
+            assert.ok(res3[0].equals(new List([1, 2, 3])));
+            assert.ok(res3[1].equals(new List([])));
+
+            const res4 = new List([1, 2, 3]).break(x => x < 9);
+            assert.ok(res4[0].equals(new List([])));
+            assert.ok(res4[1].equals(new List([1, 2, 3])));
+        })
         it('.nub()', () => {
             assert.ok(new List([1, 1, 2, 2, 2, 3, 5]).nub().equals(new List([1, 2, 3, 5])));
         });

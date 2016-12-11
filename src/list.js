@@ -39,6 +39,12 @@ export default class List {
         }
         return new List(res);
     }
+    break(f) {
+        for (let i = 0, _i = this.length; i < _i; i++) {
+            if (f(this.value[i])) return [new List(this.value.slice(0, i)), new List(this.value.slice(i))];
+        }
+        return [this, List.empty];
+    }
     chain(f) {
         return List.concat(this.map(f));
     }
