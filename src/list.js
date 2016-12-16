@@ -312,6 +312,16 @@ class InfinityList {
         }
         return new List(res);
     }
+    map(f) {
+        const res = new InfinityList();
+        const iter = this.iterator();
+        res.iterator = function*() {
+            for (const val of iter) {
+                yield f(val);
+            }
+        };
+        return res;
+    }
 }
 
 // List.prototype['!!'] = function(n) {
