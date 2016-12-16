@@ -259,9 +259,13 @@ describe('list-in-js', () => {
         it('.toArray()', () => {
             assert.equal(JSON.stringify(new List([[1, 2], [3, 4], [5, 6]]).toArray()), JSON.stringify([[1, 2], [3, 4], [5, 6]]));
         });
+        it('.unzip()', () => {
+            assert.ok(new List([[1, 4], [2, 5], [3, 6]]).unzip().equals(new List([[1, 2, 3], [4, 5, 6]])));
+            assert.ok(new List([[1, 4, 7], [2, 5, 8], [3, 6, 9]]).unzip3().equals(new List([[1, 2, 3], [4, 5, 6], [7, 8, 9]])));
+        })
         it('.zip()', () => {
-            assert.ok(List.zip([1, 2, 3], [4, 5]).equals(new List([[1, 4], [2, 5]].map(l => new List(l)))));
-            assert.ok(List.zip3([1, 2, 3], [4, 5, 6], [7, 8, 9, 10]).equals(new List([[1, 4, 7], [2, 5, 8], [3, 6, 9]].map(l => new List(l)))));
+            assert.ok(List.zip([1, 2, 3], [4, 5]).equals(new List([[1, 4], [2, 5]])));
+            assert.ok(List.zip3([1, 2, 3], [4, 5, 6], [7, 8, 9, 10]).equals(new List([[1, 4, 7], [2, 5, 8], [3, 6, 9]])));
         });
         it('.zipWith()', () => {
             assert.ok(List.zipWith((a, b) => a + b, [1, 2, 3], [4, 5]).equals(new List([5, 7])));

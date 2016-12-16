@@ -267,6 +267,20 @@ export default class List {
     traverse(f, of) {
         return this.map(f).sequence(of);
     }
+    unzipHelper(n) {
+        const get = n => x => x['!!'] ? x['!!'](n) : x[n];
+        const res = [];
+        for (let i = 0; i < n; i++) {
+            res.push(this.map(get(i)));
+        }
+        return new List(res);
+    }
+    unzip() {return this.unzipHelper(2);}
+    unzip3() {return this.unzipHelper(3);}
+    unzip4() {return this.unzipHelper(4);}
+    unzip5() {return this.unzipHelper(5);}
+    unzip6() {return this.unzipHelper(6);}
+    unzip7() {return this.unzipHelper(7);}
 };
 List.pure = x => new List([x]);
 List.concat = list => {
