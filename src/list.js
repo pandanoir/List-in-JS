@@ -298,7 +298,7 @@ class InfinityList {
         for (let i = 0; i < n; i = 0 | i + 1) {
             res.push(iter.next().value);
         }
-        return res;
+        return new List(res);
     }
 }
 

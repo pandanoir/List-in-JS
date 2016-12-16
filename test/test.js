@@ -130,7 +130,7 @@ describe('list-in-js', () => {
             assert.ok(res4[1].equals(new List([1, 2, 3])));
         });
         it('.cycle()', () => {
-            assert.deepEqual(new List([...'ABC']).cycle().take(10), [...'ABCABCABCA']);
+            assert.ok(new List([...'ABC']).cycle().take(10).equals(new List([...'ABCABCABCA'])));
         });
         it('.delete()', () => {
             assert.ok(new List([...'banana']).delete('a').equals(new List([...'bnana'])));
@@ -177,7 +177,7 @@ describe('list-in-js', () => {
             assert.equal(List.empty.isnull(), true);
         });
         it('.iterate()', () => {
-            assert.deepEqual(List.iterate((x) => x * 10, 1).take(5), [1, 10, 100, 1000, 10000]);
+            assert.ok(List.iterate((x) => x * 10, 1).take(5).equals(new List([1, 10, 100, 1000, 10000])));
         });
         it('.last()', () => {
             assert.equal(a.last(), 3);
@@ -199,7 +199,7 @@ describe('list-in-js', () => {
             assert.equal(oneToTen.product(), 3628800);
         });
         it('.repeat()', () => {
-            assert.deepEqual(List.repeat(123).take(5), [123, 123, 123, 123, 123]);
+            assert.ok(List.repeat(123).take(5).equals(new List([123, 123, 123, 123, 123])));
         });
         it('.reverse()', () => {
             assert.ok(a.reverse().equals(new List([3, 2, 1])));
