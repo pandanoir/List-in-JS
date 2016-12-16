@@ -303,6 +303,15 @@ class InfinityList {
         }
         return new List(res);
     }
+    takeWhile(f) {
+        const res = [];
+        const iter = this.iterator();
+        for (const val of iter) {
+            if (!f(val)) break;
+            res.push(val);
+        }
+        return new List(res);
+    }
 }
 
 // List.prototype['!!'] = function(n) {
