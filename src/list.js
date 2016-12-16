@@ -305,12 +305,31 @@ List._zip_ = (...args) => {
     }
     return new List(res);
 };
+List._zipWith_ = (f, ...args) => {
+    args = args.map(val => {
+        if (val instanceof List) return val.toArray();
+        return val;
+    });
+    const n = Math.min(...(args.map(a => a.length)));
+    const res = [];
+    for (let i = 0; i < n; i++) {
+        res.push(f(...args.map(a => a[i])));
+    }
+    return new List(res);
+};
 List.zip = (a, b) => List._zip_(a, b);
 List.zip3 = (a, b, c) => List._zip_(a, b, c);
 List.zip4 = (a, b, c, d) => List._zip_(a, b, c, d);
 List.zip5 = (a, b, c, d, e) => List._zip_(a, b, c, d, e);
 List.zip6 = (a, b, c, d, e, f) => List._zip_(a, b, c, d, e, f);
 List.zip7 = (a, b, c, d, e, f, g) => List._zip_(a, b, c, d, e, f, g);
+
+List.zipWith = (_f, a, b) => List._zipWith_(_f, a, b);
+List.zipWith3 = (_f, a, b, c) => List._zipWith_(_f, a, b, c);
+List.zipWith4 = (_f, a, b, c, d) => List._zipWith_(_f, a, b, c, d);
+List.zipWith5 = (_f, a, b, c, d, e) => List._zipWith_(_f, a, b, c, d, e);
+List.zipWith6 = (_f, a, b, c, d, e, f) => List._zipWith_(_f, a, b, c, d, e, f);
+List.zipWith7 = (_f, a, b, c, d, e, f, g) => List._zipWith_(_f, a, b, c, d, e, f, g);
 
 class InfinityList {
     constructor() {}
