@@ -176,6 +176,9 @@ describe('list-in-js', () => {
             assert.equal(a.isnull(), false);
             assert.equal(List.empty.isnull(), true);
         });
+        it('.iterate()', () => {
+            assert.deepEqual(List.empty.iterate((x) => x * 10, 1).take(5), [1, 10, 100, 1000, 10000]);
+        });
         it('.last()', () => {
             assert.equal(a.last(), 3);
         });
