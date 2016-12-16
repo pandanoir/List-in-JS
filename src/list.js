@@ -322,6 +322,10 @@ class InfinityList {
         };
         return res;
     }
+    '!!'(n) {
+        if (n < 0) throw Error('!! got negative index.');
+        return this.take(n + 1)['!!'](n);
+    }
 }
 
 // List.prototype['!!'] = function(n) {
