@@ -23,6 +23,17 @@ const a = new List([1, 2, 3]),
     x = 100;
 
 describe('list-in-js', () => {
+    describe('InfinityList', () => {
+        it('.take()', () => {
+            assert.ok(List.iterate(a => [a[1], a[0] + a[1]], [0, 1]).map(x => x[0]).take(7).equals(new List([0, 1, 1, 2, 3, 5, 8])));
+        });
+        it('.takeWhile()', () => {
+            assert.ok(List.iterate(a => [a[1], a[0] + a[1]], [0, 1]).map(x => x[0]).takeWhile(x => x < 10).equals(new List([0, 1, 1, 2, 3, 5, 8])));
+        });
+        it('["!!"]()', () => {
+            assert.equal(List.iterate(a => [a[1], a[0] + a[1]], [0, 1]).map(x => x[0])['!!'](6), 8);
+        });
+    })
     describe('Setoid', () => {
         it('reflexivity', () => {
             assert.ok(a.equals(a));
