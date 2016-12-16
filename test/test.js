@@ -198,6 +198,9 @@ describe('list-in-js', () => {
         it('.product()', () => {
             assert.equal(oneToTen.product(), 3628800);
         });
+        it('.repeat()', () => {
+            assert.deepEqual(List.repeat(123).take(5), [123, 123, 123, 123, 123]);
+        });
         it('.reverse()', () => {
             assert.ok(a.reverse().equals(new List([3, 2, 1])));
         });

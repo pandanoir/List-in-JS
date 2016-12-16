@@ -282,6 +282,13 @@ List.iterate = (f, x) => {
     };
     return res;
 };
+List.repeat = x => {
+    const res = new InfinityList();
+    res.iterator = function*() {
+        while (true) yield x;
+    }
+    return res;
+}
 List.of = List.prototype.of;
 class InfinityList {
     constructor() {}
