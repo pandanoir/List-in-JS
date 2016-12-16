@@ -201,6 +201,9 @@ describe('list-in-js', () => {
         it('.repeat()', () => {
             assert.ok(List.repeat(123).take(5).equals(new List([123, 123, 123, 123, 123])));
         });
+        it('.replicate()', () => {
+            assert.ok(List.replicate(5, 'A').equals(new List([...'AAAAA'])));
+        })
         it('.reverse()', () => {
             assert.ok(a.reverse().equals(new List([3, 2, 1])));
         });

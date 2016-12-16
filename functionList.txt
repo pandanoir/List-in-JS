@@ -35,10 +35,10 @@ scanl1
 scanr1
 mapAccumL
 mapAccumR
-iterate
-repeat
-replicate
-cycle
+- iterate
+- repeat
+- replicate
+- cycle
 unfoldr
 - take
 - drop

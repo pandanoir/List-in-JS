@@ -289,6 +289,9 @@ List.repeat = x => {
     }
     return res;
 }
+List.replicate = (n, x) => {
+    return List.repeat(x).take(n);
+}
 List.of = List.prototype.of;
 class InfinityList {
     constructor() {}
