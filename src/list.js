@@ -213,6 +213,12 @@ export default class List {
                 return ma.chain(xs => List.pure(List.of(x).concat(xs)));
             }), new List([[]]));
     }
+    sort() {
+        return new List(this.value.concat().sort((a, b) => a > b));
+    }
+    sortBy(f) {
+        return new List(this.value.concat().sort(f));
+    }
     span(f) {
         if (f(this.head())) {
             const res = this.tail().span(f);
@@ -347,6 +353,20 @@ List.zipWith7 = (_f, a, b, c, d, e, f, g) => List._zipWith_(_f, a, b, c, d, e, f
 
 class InfinityList {
     constructor() {}
+    '!!'(n) {
+        if (n < 0) throw Error('!! got negative index.');
+        return this.take(n + 1)['!!'](n);
+    }
+    map(f) {
+        const res = new InfinityList();
+        const iter = this.iterator();
+        res.iterator = function*() {
+            for (const val of iter) {
+                yield f(val);
+            }
+        };
+        return res;
+    }
     take(n) {
         const res = [];
         const iter = this.iterator();
@@ -363,20 +383,6 @@ class InfinityList {
             res.push(val);
         }
         return new List(res);
-    }
-    map(f) {
-        const res = new InfinityList();
-        const iter = this.iterator();
-        res.iterator = function*() {
-            for (const val of iter) {
-                yield f(val);
-            }
-        };
-        return res;
-    }
-    '!!'(n) {
-        if (n < 0) throw Error('!! got negative index.');
-        return this.take(n + 1)['!!'](n);
     }
 }
 

@@ -93,7 +93,7 @@ unwords
 (\)
 union
 intersect
-sort
+- sort
 insert
 nubBy
 - deleteBy
@@ -101,7 +101,7 @@ deleteFirstsBy
 unionBy
 intersectBy
 groupBy
-sortBy
+- sortBy
 insertBy
 maximumBy
 minimumBy

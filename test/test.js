@@ -225,6 +225,13 @@ describe('list-in-js', () => {
             assert.ok(new List([8, 12, 24, 4]).scanr((a, b) => b / a, 2).equals(new List([8, 1, 12, 2, 2])));
             assert.ok(new List([3, 6, 12, 4, 55, 11]).scanr(Math.max, 18).equals(new List([55, 55, 55, 55, 55, 18, 18])));
         });
+        it('.sort()', () => {
+            assert.ok(new List([28, 13, 28, 4, 29, 28, 15, 12, 14, 3]).sort().equals(new List([3, 4, 12, 13, 14, 15, 28, 28, 28, 29])));
+            assert.ok(new List([...'Zvon.org']).sort().equals(new List([...'.Zgnoorv'])));
+        });
+        it('.sortBy()', () => {
+            assert.ok(new List([28, 13, 28, 4, 29, 28, 15, 12, 14, 3]).sortBy((a, b) => a.toString(2) > b.toString(2)).equals(new List([4, 3, 12, 13, 14, 28, 28, 28, 29, 15])));
+        });
         it('.span()', () => {
             const res1 = new List([1, 2, 3, 4, 1, 2, 3, 4]).span(smallerThan(3));
             assert.ok(res1[0].equals(new List([1, 2])));
