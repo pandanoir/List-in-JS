@@ -293,6 +293,25 @@ List.replicate = (n, x) => {
     return List.repeat(x).take(n);
 }
 List.of = List.prototype.of;
+List._zip_ = (...args) => {
+    args = args.map(val => {
+        if (val instanceof List) return val.toArray();
+        return val;
+    });
+    const n = Math.min(...(args.map(a => a.length)));
+    const res = [];
+    for (let i = 0; i < n; i++) {
+        res.push(new List(args.map(a => a[i])));
+    }
+    return new List(res);
+};
+List.zip = (a, b) => List._zip_(a, b);
+List.zip3 = (a, b, c) => List._zip_(a, b, c);
+List.zip4 = (a, b, c, d) => List._zip_(a, b, c, d);
+List.zip5 = (a, b, c, d, e) => List._zip_(a, b, c, d, e);
+List.zip6 = (a, b, c, d, e, f) => List._zip_(a, b, c, d, e, f);
+List.zip7 = (a, b, c, d, e, f, g) => List._zip_(a, b, c, d, e, f, g);
+
 class InfinityList {
     constructor() {}
     take(n) {

@@ -259,5 +259,9 @@ describe('list-in-js', () => {
         it('.toArray()', () => {
             assert.equal(JSON.stringify(new List([[1, 2], [3, 4], [5, 6]]).toArray()), JSON.stringify([[1, 2], [3, 4], [5, 6]]));
         });
+        it('.zip()', () => {
+            List.zip([1, 2, 3], [4, 5]).equals(new List([[1, 4], [2, 5]].map(l => new List(l))));
+            List.zip3([1, 2, 3], [4, 5, 6], [7, 8, 9, 10]).equals(new List([[1, 4, 7], [2, 5, 8], [3, 6, 9]].map(l => new List(l))));
+        })
     });
 });

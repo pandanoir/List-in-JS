@@ -66,12 +66,12 @@ elemIndex
 elemIndices
 findIndex
 findIndices
-zip
-zip3
-zip4
-zip5
-zip6
-zip7
+- zip
+- zip3
+- zip4
+- zip5
+- zip6
+- zip7
 zipWith
 zipWith3
 zipWith4
