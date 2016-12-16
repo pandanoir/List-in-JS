@@ -155,14 +155,6 @@ export default class List {
     isnull() {
         return this.equals(List.empty);
     }
-    iterate(f, x) {
-        // create infinity list
-        const res = new InfinityList();
-        res.iterator = function*() {
-            while (true) yield [x, x = f(x)][0];
-        };
-        return res;
-    }
     null() {
         // same as isnull()
         return this.equals(List.empty);
@@ -282,6 +274,14 @@ List.concat = list => {
     return list.head().concat(List.concat(list.tail()));
 };
 List.empty = new List([]);
+List.iterate = (f, x) => {
+    // create infinity list
+    const res = new InfinityList();
+    res.iterator = function*() {
+        while (true) yield [x, x = f(x)][0];
+    };
+    return res;
+};
 List.of = List.prototype.of;
 class InfinityList {
     constructor() {}
