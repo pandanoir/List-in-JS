@@ -55,6 +55,18 @@ export default class List {
     concat(b) {
         return new List(this.value.concat(b.value));
     }
+    cycle() {
+        const res = new InfinityList();
+        const value = this.value;
+        res.iterator = function*() {
+            while (true) {
+                for (const val of value) {
+                    yield val;
+                }
+            }
+        };
+        return res;
+    }
     delete(a) {
         for (let i = 0, _i = this.length; i < _i; i++) {
             if (this.value[i] === a) return new List(this.value.slice(0, i).concat(this.value.slice(i + 1)));
@@ -263,6 +275,17 @@ List.concat = list => {
 };
 List.empty = new List([]);
 List.of = List.prototype.of;
+class InfinityList {
+    constructor() {}
+    take(n) {
+        const res = [];
+        const iter = this.iterator();
+        for (let i = 0; i < n; i = 0 | i + 1) {
+            res.push(iter.next().value);
+        }
+        return res;
+    }
+}
 
 // List.prototype['!!'] = function(n) {
 //     if (n === 0) return this.head();

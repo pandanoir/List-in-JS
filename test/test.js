@@ -128,7 +128,10 @@ describe('list-in-js', () => {
             const res4 = new List([1, 2, 3]).break(x => x < 9);
             assert.ok(res4[0].equals(new List([])));
             assert.ok(res4[1].equals(new List([1, 2, 3])));
-        })
+        });
+        it('.cycle()', () => {
+            assert.deepEqual(new List([...'ABC']).cycle().take(10), [...'ABCABCABCA']);
+        });
         it('.delete()', () => {
             assert.ok(new List([...'banana']).delete('a').equals(new List([...'bnana'])));
         });
