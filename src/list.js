@@ -1,10 +1,108 @@
 const objToString = Object.prototype.toString;
-export default class List {
+class InfinityList {
+    constructor() {}
+    '!!'(n) {
+        if (n < 0) throw Error('!! got negative index.');
+        if (n === 0) return this.head();
+        return this.tail()['!!'](n - 1);
+    }
+    concat(b) {
+        const res = new InfinityList();
+        const self = this;
+        res.iterator = function*() {
+            yield* self.iterator();
+            yield* b.iterator();
+        }
+        return res;
+    }
+    foldr(f, acc) {
+        if (this.iterator().next().done) return acc;
+        return f(this.head(), this.tail().foldr(f, acc));
+    }
+    head() {
+        const iter = this.iterator();
+        return iter.next().value;
+    }
+    init() {
+        const res = new InfinityList();
+        const self = this;
+        res.iterator = function*() {
+            const iter = self.iterator();
+            let val = iter.next();
+            let next = iter.next();
+            while (!next.done) {
+                yield val.value;
+                val = next;
+                next = iter.next();
+            }
+        };
+        return res;
+    }
+    inits() {
+        if (this.iterator().next().done) return List.empty;
+        return this.init().inits().concat(this);
+    }
+    intersperse(s) {
+        if (this.length === 0) return List.empty;
+        if (this.length === 1) return this;
+        return new List([this.head(), s]).concat(this.tail().intersperse(s));
+    }
+    span(f) {
+        if (f(this.head())) {
+            const [ys, zs] = this.tail().span(f);
+            return [List.of(this.head()).concat(ys), zs];
+        } else return [List.empty, this];
+    }
+    tail() {
+        const res = new InfinityList();
+        const self = this;
+        res.iterator = function*() {
+            const iter = self.iterator();
+            iter.next();
+            yield* iter;
+        }
+        return res;
+    }
+    tails() {
+        if (this.length === 0) return List.of(this.value);
+        return List.of(this.value).concat(this.tail().tails());
+    }
+    map(f) {
+        const res = new InfinityList();
+        const iter = this.iterator();
+        res.iterator = function*() {
+            for (const val of iter) {
+                yield f(val);
+            }
+        };
+        return res;
+    }
+    take(n) {
+        const res = [];
+        const iter = this.iterator();
+        for (let i = 0; i < n; i = 0 | i + 1) {
+            res.push(iter.next().value);
+        }
+        return new List(res);
+    }
+    takeWhile(f) {
+        const res = [];
+        const iter = this.iterator();
+        for (const val of iter) {
+            if (!f(val)) break;
+            res.push(val);
+        }
+        return new List(res);
+    }
+}
+
+export default class List extends InfinityList {
     constructor(_arr) {
         if (!Array.isArray(_arr)) {
             throw Error('expect array.got ' + _arr);
             return;
         }
+        super();
         const arr = new Array(_arr.length);
         for (let i = 0, _i = _arr.length; i < _i; i++) {
             if (Array.isArray(_arr[i])) {
@@ -15,10 +113,9 @@ export default class List {
         }
         this.value = arr;
         this.length = arr.length;
-    }
-    '!!'(n) {
-        if (n < 0) throw Error('!! got negative index.');
-        return this.value[n];
+        this.iterator = function*() {
+            yield* arr;
+        }
     }
     all(f) {
         return this.map(f).and();
@@ -110,6 +207,7 @@ export default class List {
             }
             return true;
         };
+        if (!(b instanceof List)) return false;
         return isEquals(this.value, b.value);
     }
     filter(f) {
@@ -127,15 +225,8 @@ export default class List {
     foldl1(f, acc) {
         return this.tail().foldl(f, this.head());
     }
-    foldr(f, acc) {
-        if (this.value.length === 0) return acc;
-        return f(this.head(), this.tail().foldr(f, acc));
-    }
     foldr1(f, acc) {
         return this.init().foldr(f, this.last());
-    }
-    head() {
-        return this.value[0];
     }
     init() {
         return new List(this.value.slice(0, -1));
@@ -146,11 +237,6 @@ export default class List {
     }
     intercalate(s) {
         return List.concat(this.intersperse(s));
-    }
-    intersperse(s) {
-        if (this.length === 0) return List.empty;
-        if (this.length === 1) return this;
-        return new List([this.head(), s]).concat(this.tail().intersperse(s));
     }
     isnull() {
         return this.equals(List.empty);
@@ -186,7 +272,7 @@ export default class List {
     nub() {
         if (this.length === 0) return List.empty;
         const x = this.head(), xs = this.tail();
-        return List.of(x).concat(xs.filter(y => x !== y).nub())
+        return List.of(x).concat(xs.filter(y => x !== y).nub());
     }
     of(...args) {
         return new List(args);
@@ -219,13 +305,6 @@ export default class List {
     sortBy(f) {
         return new List(this.value.concat().sort(f));
     }
-    span(f) {
-        if (f(this.head())) {
-            const res = this.tail().span(f);
-            const ys = res[0], zs = res[1];
-            return [List.of(this.head()).concat(ys), zs];
-        } else return [List.empty, this];
-    }
     subsequences() {
         return this.foldl((acc, x) => acc.concat(acc.map(item => item.concat(List.of(x)))), new List([List.empty]));
     }
@@ -234,20 +313,6 @@ export default class List {
     }
     tail() {
         return new List(this.value.slice(1));
-    }
-    tails() {
-        if (this.length === 0) return List.of(this.value);
-        return List.of(this.value).concat(this.tail().tails());
-    }
-    take(n) {
-        if (n === 0) return List.empty;
-        return List.of(this.head()).concat(this.tail().take(n - 1));
-    }
-    takeWhile(f) {
-        if (f(this.head())) {
-            return List.of(this.head()).concat(this.tail().takeWhile(f));
-        }
-        return List.empty;
     }
     toArray() {
         return this.reduce((acc, x) => {
@@ -294,10 +359,11 @@ List.concat = list => {
     return list.head().concat(List.concat(list.tail()));
 };
 List.empty = new List([]);
-List.iterate = (f, x) => {
+List.iterate = (f, _x) => {
     // create infinity list
     const res = new InfinityList();
     res.iterator = function*() {
+        let x = _x;
         while (true) yield [x, x = f(x)][0];
     };
     return res;
@@ -350,59 +416,3 @@ List.zipWith4 = (_f, a, b, c, d) => List._zipWith_(_f, a, b, c, d);
 List.zipWith5 = (_f, a, b, c, d, e) => List._zipWith_(_f, a, b, c, d, e);
 List.zipWith6 = (_f, a, b, c, d, e, f) => List._zipWith_(_f, a, b, c, d, e, f);
 List.zipWith7 = (_f, a, b, c, d, e, f, g) => List._zipWith_(_f, a, b, c, d, e, f, g);
-
-class InfinityList {
-    constructor() {}
-    '!!'(n) {
-        if (n < 0) throw Error('!! got negative index.');
-        return this.take(n + 1)['!!'](n);
-    }
-    map(f) {
-        const res = new InfinityList();
-        const iter = this.iterator();
-        res.iterator = function*() {
-            for (const val of iter) {
-                yield f(val);
-            }
-        };
-        return res;
-    }
-    take(n) {
-        const res = [];
-        const iter = this.iterator();
-        for (let i = 0; i < n; i = 0 | i + 1) {
-            res.push(iter.next().value);
-        }
-        return new List(res);
-    }
-    takeWhile(f) {
-        const res = [];
-        const iter = this.iterator();
-        for (const val of iter) {
-            if (!f(val)) break;
-            res.push(val);
-        }
-        return new List(res);
-    }
-}
-
-// List.prototype['!!'] = function(n) {
-//     if (n === 0) return this.head();
-//     if (n < 0) throw Error('!! got negative index.');
-//     return this.tail()['!!'](n-1);
-// };
-if (typeof [].map === 'function') {
-    List.prototype.map = function(f) {
-        return new List(this.value.map(x => f(x)));
-    };
-}
-if (typeof [].reduce === 'function') {
-    List.prototype.foldl = List.prototype.reduce = function(f, acc) {
-        return this.value.reduce(f, acc);
-    };
-}
-if (typeof [].reduceRight === 'function') {
-    List.prototype.foldr = function(f, acc) {
-        return this.value.reduceRight((acc, x) => f(x, acc), acc);
-    };
-}

@@ -244,6 +244,9 @@ describe('list-in-js', () => {
             const res3 = new List([1, 2, 3]).span(smallerThan(0));
             assert.ok(res3[0].equals(new List([])));
             assert.ok(res3[1].equals(new List([1, 2, 3])));
+
+            const res4 = List.iterate(x => x * 10, 1).span(smallerThan(1000));
+            assert.ok(res4[0].equals(new List([1, 10, 100])));
         });
         it('.subsequences()', () => {
             assert.ok(a.subsequences().equals(new List([[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]])));
