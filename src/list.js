@@ -9,25 +9,25 @@ class InfinityList {
     concat(b) {
         const res = new InfinityList();
         const self = this;
-        res.iterator = function*() {
-            yield* self.iterator();
-            yield* b.iterator();
+        res.generator = function*() {
+            yield* self.generator();
+            yield* b.generator();
         }
         return res;
     }
     foldr(f, acc) {
-        if (this.iterator().next().done) return acc;
+        if (this.generator().next().done) return acc;
         return f(this.head(), this.tail().foldr(f, acc));
     }
     head() {
-        const iter = this.iterator();
+        const iter = this.generator();
         return iter.next().value;
     }
     init() {
         const res = new InfinityList();
         const self = this;
-        res.iterator = function*() {
-            const iter = self.iterator();
+        res.generator = function*() {
+            const iter = self.generator();
             let val = iter.next();
             let next = iter.next();
             while (!next.done) {
@@ -39,12 +39,13 @@ class InfinityList {
         return res;
     }
     inits() {
-        if (this.iterator().next().done) return List.empty;
+        if (this.generator().next().done) return List.empty;
         return this.init().inits().concat(this);
     }
     intersperse(s) {
-        if (this.length === 0) return List.empty;
-        if (this.length === 1) return this;
+        const iter = this.generator();
+        if (iter.next().done) return List.empty;
+        if (iter.next().done) return this;
         return new List([this.head(), s]).concat(this.tail().intersperse(s));
     }
     span(f) {
@@ -56,8 +57,8 @@ class InfinityList {
     tail() {
         const res = new InfinityList();
         const self = this;
-        res.iterator = function*() {
-            const iter = self.iterator();
+        res.generator = function*() {
+            const iter = self.generator();
             iter.next();
             yield* iter;
         }
@@ -69,8 +70,9 @@ class InfinityList {
     }
     map(f) {
         const res = new InfinityList();
-        const iter = this.iterator();
-        res.iterator = function*() {
+        const gen = this.generator;
+        res.generator = function*() {
+            const iter = gen();
             for (const val of iter) {
                 yield f(val);
             }
@@ -79,7 +81,7 @@ class InfinityList {
     }
     take(n) {
         const res = [];
-        const iter = this.iterator();
+        const iter = this.generator();
         for (let i = 0; i < n; i = 0 | i + 1) {
             res.push(iter.next().value);
         }
@@ -87,7 +89,7 @@ class InfinityList {
     }
     takeWhile(f) {
         const res = [];
-        const iter = this.iterator();
+        const iter = this.generator();
         for (const val of iter) {
             if (!f(val)) break;
             res.push(val);
@@ -113,7 +115,7 @@ export default class List extends InfinityList {
         }
         this.value = arr;
         this.length = arr.length;
-        this.iterator = function*() {
+        this.generator = function*() {
             yield* arr;
         }
     }
@@ -155,7 +157,7 @@ export default class List extends InfinityList {
     cycle() {
         const res = new InfinityList();
         const value = this.value;
-        res.iterator = function*() {
+        res.generator = function*() {
             while (true) {
                 for (const val of value) {
                     yield val;
@@ -362,7 +364,7 @@ List.empty = new List([]);
 List.iterate = (f, _x) => {
     // create infinity list
     const res = new InfinityList();
-    res.iterator = function*() {
+    res.generator = function*() {
         let x = _x;
         while (true) yield [x, x = f(x)][0];
     };
@@ -370,7 +372,7 @@ List.iterate = (f, _x) => {
 };
 List.repeat = x => {
     const res = new InfinityList();
-    res.iterator = function*() {
+    res.generator = function*() {
         while (true) yield x;
     }
     return res;
