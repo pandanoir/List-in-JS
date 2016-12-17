@@ -65,8 +65,17 @@ class InfinityList {
         return res;
     }
     tails() {
-        if (this.length === 0) return List.of(this.value);
-        return List.of(this.value).concat(this.tail().tails());
+        const res = new InfinityList();
+        const self = this;
+        res.generator = function*() {
+            let tail = self;
+            while (true) {
+                yield tail;
+                tail = tail.tail();
+                if (tail.generator().next().done) break;
+            }
+        };
+        return res;
     }
     map(f) {
         const res = new InfinityList();
@@ -315,6 +324,10 @@ export default class List extends InfinityList {
     }
     tail() {
         return new List(this.value.slice(1));
+    }
+    tails() {
+        if (this.length === 0) return List.of(this.value);
+        return List.of(this.value).concat(this.tail().tails());
     }
     toArray() {
         return this.reduce((acc, x) => {

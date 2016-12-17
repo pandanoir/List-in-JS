@@ -24,6 +24,16 @@ const a = new List([1, 2, 3]),
 
 describe('list-in-js', () => {
     describe('InfinityList', () => {
+        it('.tails()', () => {
+            assert.ok(List.iterate(a => [a[1], a[0] + a[1]], [0, 1])
+                .map(x => x[0])
+                .tails()
+                .take(3)
+                .map(list => list.take(3)).equals(
+                    new List([[0, 1, 1], [1, 1, 2], [1, 2, 3]])
+                )
+            );
+        });
         it('.take()', () => {
             assert.ok(List.iterate(a => [a[1], a[0] + a[1]], [0, 1]).map(x => x[0]).take(7).equals(new List([0, 1, 1, 2, 3, 5, 8])));
         });
