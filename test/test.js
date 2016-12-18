@@ -26,6 +26,9 @@ const fib = List.iterate(a => [a[1], a[0] + a[1]], [0, 1]).map(x => x[0]);
 
 describe('list-in-js', () => {
     describe('InfinityList', () => {
+        it('.drop()', () => {
+            assert.ok(fib.drop(4).take(7).equals(new List([3, 5, 8, 13, 21, 34, 55])));
+        });
         it('.lines()', () => {
             assert.ok(new List([...'aa\n']).cycle().lines().take(8).equals(new List(['aa', 'aa', 'aa', 'aa', 'aa', 'aa', 'aa', 'aa'])));
         });

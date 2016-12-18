@@ -15,6 +15,16 @@ class InfinityList {
         }
         return res;
     }
+    drop(n) {
+        const res = new InfinityList();
+        const self = this;
+        res.generator = function*() {
+            const iter = self.generator();
+            for (let i = 0; i < n; i++) iter.next();
+            yield* iter;
+        }
+        return res;
+    }
     foldr(f, acc) {
         if (this.generator().next().done) return acc;
         return f(this.head(), this.tail().foldr(f, acc));
