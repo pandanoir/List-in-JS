@@ -314,6 +314,13 @@ describe('list-in-js', () => {
         it('.toArray()', () => {
             assert.deepEqual(new List([[1, 2], [3, 4], [5, 6]]).toArray(), [[1, 2], [3, 4], [5, 6]]);
         });
+        it('.union()', () => {
+            assert.ok(new List([...'dog']).union(new List([...'cow'])).equals(new List([...'dogcw'])));
+            assert.ok(new List([1,2,3]).union(new List([3,2,1,0])).equals(new List([1,2,3,0])));
+            assert.ok(new List([1,2,2]).union(new List([1,2,3])).equals(new List([1,2,2,3])));
+            assert.ok(new List([1,2,2]).union(new List([1,3,3])).equals(new List([1,2,2,3])));
+            assert.ok(new List([...'abcd']).union(new List([...'AaBbCcDdEe'])).equals(new List([...'abcdABCDEe'])));
+        });
         it('.unlines()', () => {
             assert.ok(new List(['a', 'b', 'c']).unlines().equals(new List([...'a\nb\nc\n'])));
             assert.ok(new List(['']).unlines().equals(new List([...'\n'])));

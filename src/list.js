@@ -453,6 +453,9 @@ export default class List extends InfinityList {
     traverse(f, of) {
         return this.map(f).sequence(of);
     }
+    union(l) {
+        return this.concat(l.nub()['\\'](this));
+    }
     unlines() {
         let res = '';
         for (let i = 0, _i = this.length; i < _i; i++) {
