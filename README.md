@@ -2,38 +2,97 @@
 List in JS provides List like List of Haskell. List in JS implements [Fantasy Land Specification](https://github.com/fantasyland/fantasy-land). List is a Setoid, a Semigroup, a Monoid, a Functor, an Applicative Functor, Foldable, Traversable, a Chain and a Monad.
 
 #Methods
-Methods of List behave not like Array of JavaScript but like List of Haskell. So List don't have .slice() but have .tail().
+Methods of List behave as List of Haskell.
 
-* `List.empty()` returns `new List([])`.
-* `List.prototype.empty()` is alias of `List.empty()`.
-* `List.prototype.map(f)` return the list of which f applies each item.
-* `List.prototype.reduce(f,acc)` is alias of `List.prototype.foldl()`.
-* `List.of(x1,x2,..)` returns `new List([x1,x2,..])`.
-* `List.prototype.of(x1,x2,..)` is alias of `List.of()`.
-* `List.prototype.ap(f)` applies List to f as Applicative Functor.
-* `List.prototype.concat(b)` concatenates List and b.
-* `List.prototype.equals(a,b)` returns whether a equals b or not.
-* `List.prototype.chain(f)` is the same function as >>= in Haskell.
-* `List.prototype.traverse(f, of)`
-* `List.prototype.sequence(of)`
-* `List.prototype.foldr(f,acc)`
-* `List.prototype.foldl(f,acc)`
-* `List.prototype.head()`
-* `List.prototype.tail()`
-* `List.prototype.last()`
-* `List.prototype.init()`
-* `List.prototype.isnull()`
-* `List.prototype.length()`
-* `List.prototype.toArray() `
-* `List.prototype.filter(f)`
-* `List.prototype.reverse()`
-* `List.prototype.and()`
-* `List.prototype.or()`
-* `List.prototype.any(f)`
-* `List.prototype.all(f)`
-* `List.prototype.sum()`
-* `List.prototype.product()`
-* `List.prototype.maximum()`
-* `List.prototype.minimum()`
-* `List.pure(x)`
-* `List.concat(arr)`
+## instance methods
+Now List in JS supports methods below.
+
+* !!
+* all
+* and
+* any
+* ap
+* break
+* chain
+* concat
+* concatMap
+* cycle
+* delete
+* deleteBy
+* drop
+* dropWhile
+* elem
+* empty
+* equals
+* filter
+* foldl
+* foldl1
+* foldr
+* foldr1
+* head
+* init
+* inits
+* insert
+* intercalate
+* intersperse
+* isnull
+* last
+* lines
+* map
+* maximum
+* minimum
+* nub
+* null
+* of
+* or
+* permutations
+* product
+* reduce
+* reverse
+* scanl
+* scanr
+* sequence
+* sort
+* sortBy
+* span
+* subsequences
+* sum
+* tail
+* tails
+* take
+* takeWhile
+* toArray
+* transpose
+* traverse
+* unlines
+* unwords
+* unzip
+* unzip3
+* unzip4
+* unzip5
+* unzip6
+* unzip7
+* unzipHelper
+* words
+
+## static methods
+List in JS also has static methods.
+
+* pure
+* concat
+* iterate
+* repeat
+* replicate
+* of
+* zip
+* zip3
+* zip4
+* zip5
+* zip6
+* zip7
+* zipWith
+* zipWith3
+* zipWith4
+* zipWith5
+* zipWith6
+* zipWith7
