@@ -55,6 +55,21 @@ class InfinityList {
         if (iter.next().done) return this;
         return new List([this.head(), s]).concat(this.tail().intersperse(s));
     }
+    lines() {
+        const res = new InfinityList();
+        const gen = this.generator;
+        res.generator = function*() {
+            const iter = gen();
+            let line = '';
+            for (const val of iter) {
+                if (val === '\n') {
+                    yield line;
+                    line = '';
+                } else line += val;
+            }
+        }
+        return res;
+    }
     span(f) {
         if (f(this.head())) {
             const [ys, zs] = this.tail().span(f);
@@ -266,6 +281,19 @@ export default class List extends InfinityList {
     }
     last() {
         return this.value[this.value.length - 1];
+    }
+    lines() {
+        const iter = this.generator();
+        const res = [];
+        let line = '';
+        for (const val of iter) {
+            if (val === '\n') {
+                res.push(line);
+                line = '';
+            } else line += val;
+        }
+        if (line !== '') res.push(line);
+        return new List(res);
     }
     map(f) {
         const res = new Array(this.value.length);

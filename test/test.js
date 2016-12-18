@@ -26,6 +26,9 @@ const fib = List.iterate(a => [a[1], a[0] + a[1]], [0, 1]).map(x => x[0]);
 
 describe('list-in-js', () => {
     describe('InfinityList', () => {
+        it('.lines()', () => {
+            assert.ok(new List([...'aa\n']).cycle().lines().take(8).equals(new List(['aa', 'aa', 'aa', 'aa', 'aa', 'aa', 'aa', 'aa'])));
+        });
         it('.tails()', () => {
             assert.ok(fib.tails()
                 .take(3)
@@ -209,6 +212,10 @@ describe('list-in-js', () => {
         });
         it('.last()', () => {
             assert.equal(a.last(), 3);
+        });
+        it('.lines()', () => {
+            assert.ok(new List([...'aa\nbb\nbb']).lines().equals(new List(['aa', 'bb', 'bb'])));
+            assert.ok(new List([...'aa\nbb\n']).lines().equals(new List(['aa', 'bb'])));
         });
         it('.maximum()', () => {
             assert.equal(a.maximum() === 3 && a.reverse().maximum() === 3, true);
