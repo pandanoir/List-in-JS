@@ -1,28 +1,28 @@
 const objToString = Object.prototype.toString;
 class InfinityList {
-    constructor() {}
+    constructor(generator) {
+        this.generator = generator;
+    }
     '!!'(n) {
         if (n < 0) throw Error('!! got negative index.');
         if (n === 0) return this.head();
         return this.tail()['!!'](n - 1);
     }
     concat(b) {
-        const res = new InfinityList();
-        const self = this;
-        res.generator = function*() {
-            yield* self.generator();
+        const gen = this.generator;
+        const res = new InfinityList(function*() {
+            yield* gen();
             yield* b.generator();
-        }
+        });
         return res;
     }
     drop(n) {
-        const res = new InfinityList();
-        const self = this;
-        res.generator = function*() {
-            const iter = self.generator();
+        const gen = this.generator;
+        const res = new InfinityList(function*() {
+            const iter = gen();
             for (let i = 0; i < n; i++) iter.next();
             yield* iter;
-        }
+        });
         return res;
     }
     foldr(f, acc) {
@@ -34,10 +34,9 @@ class InfinityList {
         return iter.next().value;
     }
     init() {
-        const res = new InfinityList();
-        const self = this;
-        res.generator = function*() {
-            const iter = self.generator();
+        const gen = this.generator;
+        const res = new InfinityList(function*() {
+            const iter = gen();
             let val = iter.next();
             let next = iter.next();
             while (!next.done) {
@@ -45,7 +44,7 @@ class InfinityList {
                 val = next;
                 next = iter.next();
             }
-        };
+        });
         return res;
     }
     inits() {
@@ -66,9 +65,8 @@ class InfinityList {
         return new List([this.head(), s]).concat(this.tail().intersperse(s));
     }
     lines() {
-        const res = new InfinityList();
         const gen = this.generator;
-        res.generator = function*() {
+        const res = new InfinityList(function*() {
             const iter = gen();
             let line = '';
             for (const val of iter) {
@@ -79,7 +77,7 @@ class InfinityList {
                     }
                 } else line += val;
             }
-        }
+        });
         return res;
     }
     span(f) {
@@ -89,37 +87,34 @@ class InfinityList {
         } else return [List.empty, this];
     }
     tail() {
-        const res = new InfinityList();
-        const self = this;
-        res.generator = function*() {
-            const iter = self.generator();
+        const gen = this.generator;
+        const res = new InfinityList(function*() {
+            const iter = gen();
             iter.next();
             yield* iter;
-        }
+        });
         return res;
     }
     tails() {
-        const res = new InfinityList();
         const self = this;
-        res.generator = function*() {
+        const res = new InfinityList(function*() {
             let tail = self;
             while (true) {
                 yield tail;
                 tail = tail.tail();
                 if (tail.generator().next().done) break;
             }
-        };
+        });
         return res;
     }
     map(f) {
-        const res = new InfinityList();
         const gen = this.generator;
-        res.generator = function*() {
+        const res = new InfinityList(function*() {
             const iter = gen();
             for (const val of iter) {
                 yield f(val);
             }
-        };
+        });
         return res;
     }
     take(n) {
@@ -140,34 +135,31 @@ class InfinityList {
         return new List(res);
     }
     unlines() {
-        const res = new InfinityList();
         const gen = this.generator;
-        res.generator = function*() {
+        const res = new InfinityList(function*() {
             const iter = gen();
             for (const val of iter) {
                 yield* val;
                 yield '\n';
             }
-        };
+        });
         return res;
     }
     unwords() {
-        const res = new InfinityList();
         const gen = this.generator;
-        res.generator = function*() {
+        const res = new InfinityList(function*() {
             const iter = gen();
             yield* iter.next().value;
             for (const val of iter) {
                 yield ' ';
                 yield* val;
             }
-        };
+        });
         return res;
     }
     words() {
-        const res = new InfinityList();
         const gen = this.generator;
-        res.generator = function*() {
+        const res = new InfinityList(function*() {
             const iter = gen();
             const ws = /\s/;
             let word = '';
@@ -179,7 +171,7 @@ class InfinityList {
                     }
                 } else word += val;
             }
-        }
+        });
         return res;
     }
 }
@@ -242,15 +234,12 @@ export default class List extends InfinityList {
         return super.concat(b);
     }
     cycle() {
-        const res = new InfinityList();
         const value = this.value;
-        res.generator = function*() {
+        const res = new InfinityList(function*() {
             while (true) {
-                for (const val of value) {
-                    yield val;
-                }
+                yield* value;
             }
-        };
+        });
         return res;
     }
     delete(a) {
@@ -509,18 +498,16 @@ List.concat = list => {
 List.empty = new List([]);
 List.iterate = (f, _x) => {
     // create infinity list
-    const res = new InfinityList();
-    res.generator = function*() {
+    const res = new InfinityList(function*() {
         let x = _x;
         while (true) yield [x, x = f(x)][0];
-    };
+    });
     return res;
 };
 List.repeat = x => {
-    const res = new InfinityList();
-    res.generator = function*() {
+    const res = new InfinityList(function*() {
         while (true) yield x;
-    }
+    });
     return res;
 }
 List.replicate = (n, x) => {
