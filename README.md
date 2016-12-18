@@ -34,6 +34,7 @@ Now List in JS supports methods below.
 * init
 * inits
 * insert
+* insertBy
 * intercalate
 * intersect
 * intersperse

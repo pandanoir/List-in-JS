@@ -173,7 +173,7 @@ describe('list-in-js', () => {
         });
         it('.concat()', () => {
             assert.ok(new List([...'abc']).concat(List.repeat('x')).take(8).equals(new List([...'abcxxxxx'])));
-        })
+        });
         it('.cycle()', () => {
             assert.ok(new List([...'ABC']).cycle().take(10).equals(new List([...'ABCABCABCA'])));
         });
@@ -182,7 +182,7 @@ describe('list-in-js', () => {
         });
         it('.deleteBy()', () => {
             assert.ok(new List([6, 8, 10, 12]).deleteBy((x, y) => y % x === 0, 4).equals(new List([6, 10, 12])));
-        })
+        });
         it('.drop()', () => {
             assert.ok(oneToTen.drop(4).equals(new List([5, 6, 7, 8, 9, 10])));
         });
@@ -214,12 +214,16 @@ describe('list-in-js', () => {
         it('.insert()', () => {
             assert.ok(new List([0, 1, 2, 3]).insert(4).equals(new List([0, 1, 2, 3, 4])));
             assert.ok(new List([3, 5, 1, 2, 8, 2]).insert(4).equals(new List([3, 4, 5, 1, 2, 8, 2])));
-        })
+        });
+
+        it('.insertBy()', () => {
+            assert.ok(new List([0, 1, 3, 5, 7, 9]).insertBy((a, b) => a * b - (a + b), 4).equals(new List([0, 1, 4, 3, 5, 7, 9])));
+        });
         it('.intersect()', () => {
             assert.ok(new List([1, 2, 3, 4, 5]).intersect(new List([3, 4, 5, 6, 7])).equals(new List([3, 4, 5])));
             assert.ok(new List([5, 4, 3, 2, 1]).intersect(new List([3, 4, 5, 6, 7])).equals(new List([5, 4, 3])));
             assert.ok(new List([1, 2, 2, 3, 4]).intersect(new List([6, 4, 4, 2])).equals(new List([2, 2, 4])));
-        })
+        });
         it('.intersperse()', () => {
             assert.ok(a.intersperse(0).equals(new List([1, 0, 2, 0, 3])));
             assert.ok(new List([[1], [2], [3]]).intercalate(List.of(0)).equals(new List([1, 0, 2, 0, 3])));
@@ -258,7 +262,7 @@ describe('list-in-js', () => {
         });
         it('.permutations()', () => {
             assert.ok(new List([1, 2, 3]).permutations().equals(new List([[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]])));
-        })
+        });
         it('.product()', () => {
             assert.equal(oneToTen.product(), 3628800);
         });
@@ -267,7 +271,7 @@ describe('list-in-js', () => {
         });
         it('.replicate()', () => {
             assert.ok(List.replicate(5, 'A').equals(new List([...'AAAAA'])));
-        })
+        });
         it('.reverse()', () => {
             assert.ok(a.reverse().equals(new List([3, 2, 1])));
         });

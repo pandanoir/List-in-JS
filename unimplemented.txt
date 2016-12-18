@@ -23,7 +23,6 @@ findIndices
 deleteFirstsBy
 intersectBy
 groupBy
-insertBy
 maximumBy
 minimumBy
 genericLength

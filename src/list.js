@@ -52,8 +52,11 @@ class InfinityList {
         return this.init().inits().concat(this);
     }
     insert(n) {
-        if (this.head() < n) {
-            return List.of(this.head()).concat(this.tail().insert(n));
+        return this.insertBy((x, y) => x - y, n);
+    }
+    insertBy(f, n) {
+        if (f(this.head(), n) < 0) {
+            return List.of(this.head()).concat(this.tail().insertBy(f, n));
         } else {
             return List.of(n).concat(this);
         }
