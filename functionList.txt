@@ -84,8 +84,8 @@ findIndices
 - unzip5
 - unzip6
 - unzip7
-lines
-words
+- lines
+- words
 unlines
 unwords
 - nub
@@ -94,7 +94,7 @@ unwords
 union
 intersect
 - sort
-insert
+- insert
 nubBy
 - deleteBy
 deleteFirstsBy

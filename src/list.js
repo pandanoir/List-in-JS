@@ -63,8 +63,10 @@ class InfinityList {
             let line = '';
             for (const val of iter) {
                 if (val === '\n') {
-                    yield line;
-                    line = '';
+                    if (line !== '') {
+                        yield line;
+                        line = '';
+                    }
                 } else line += val;
             }
         }
@@ -126,6 +128,24 @@ class InfinityList {
             res.push(val);
         }
         return new List(res);
+    }
+    words() {
+        const res = new InfinityList();
+        const gen = this.generator;
+        res.generator = function*() {
+            const iter = gen();
+            const ws = /\s/;
+            let word = '';
+            for (const val of iter) {
+                if (ws.test(val)) {
+                    if (word !== '') {
+                        yield word;
+                        word = '';
+                    }
+                } else word += val;
+            }
+        }
+        return res;
     }
 }
 
@@ -288,8 +308,10 @@ export default class List extends InfinityList {
         let line = '';
         for (const val of iter) {
             if (val === '\n') {
-                res.push(line);
-                line = '';
+                if (line !== '') {
+                    res.push(line);
+                    line = '';
+                }
             } else line += val;
         }
         if (line !== '') res.push(line);
@@ -403,6 +425,22 @@ export default class List extends InfinityList {
     unzip5() {return this.unzipHelper(5);}
     unzip6() {return this.unzipHelper(6);}
     unzip7() {return this.unzipHelper(7);}
+    words() {
+        const iter = this.generator();
+        const res = [];
+        const ws = /\s/;
+        let word = '';
+        for (const val of iter) {
+            if (ws.test(val)) {
+                if (word !== '') {
+                    res.push(word);
+                    word = '';
+                }
+            } else word += val;
+        }
+        if (word !== '') res.push(word);
+        return new List(res);
+    }
 };
 List.pure = x => new List([x]);
 List.concat = list => {

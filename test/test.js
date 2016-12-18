@@ -215,7 +215,7 @@ describe('list-in-js', () => {
         });
         it('.lines()', () => {
             assert.ok(new List([...'aa\nbb\nbb']).lines().equals(new List(['aa', 'bb', 'bb'])));
-            assert.ok(new List([...'aa\nbb\n']).lines().equals(new List(['aa', 'bb'])));
+            assert.ok(new List([...'\n\naa\n\nbb\n']).lines().equals(new List(['aa', 'bb'])));
         });
         it('.maximum()', () => {
             assert.equal(a.maximum() === 3 && a.reverse().maximum() === 3, true);
@@ -296,7 +296,10 @@ describe('list-in-js', () => {
         it('.unzip()', () => {
             assert.ok(new List([[1, 4], [2, 5], [3, 6]]).unzip().equals(new List([[1, 2, 3], [4, 5, 6]])));
             assert.ok(new List([[1, 4, 7], [2, 5, 8], [3, 6, 9]]).unzip3().equals(new List([[1, 2, 3], [4, 5, 6], [7, 8, 9]])));
-        })
+        });
+        it('.words()', () => {
+            assert.ok(new List([...'aa bb cc \t dd \n ee   ']).words().equals(new List(['aa', 'bb', 'cc', 'dd', 'ee'])));
+        });
         it('.zip()', () => {
             assert.ok(List.zip([1, 2, 3], [4, 5]).equals(new List([[1, 4], [2, 5]])));
             assert.ok(List.zip3([1, 2, 3], [4, 5, 6], [7, 8, 9, 10]).equals(new List([[1, 4, 7], [2, 5, 8], [3, 6, 9]])));
