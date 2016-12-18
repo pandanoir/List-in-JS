@@ -55,7 +55,7 @@ describe('list-in-js', () => {
         it('["!!"]()', () => {
             assert.equal(fib['!!'](6), 8);
         });
-    })
+    });
     describe('Setoid', () => {
         it('reflexivity', () => {
             assert.ok(a.equals(a));
@@ -133,6 +133,15 @@ describe('list-in-js', () => {
         });
     });
     describe('methods', () => {
+        it('["\\\\"]()', () => {
+            assert.ok(new List([3, 4, 5, 3, 4, 5, 3, 4, 5])['\\'](new List([3, 4, 5])).equals(new List([3, 4, 5, 3, 4, 5])));
+            assert.ok(new List([5, 4, 3, 3, 4, 5, 3, 4, 5])['\\'](new List([3, 4, 5])).equals(new List([3, 4, 5, 3, 4, 5])));
+            assert.ok(new List([1, 2, 3])['\\'](new List([3, 4, 5])).equals(new List([1, 2])));
+
+            assert.ok(new List([3, 4, 5, 3, 4, 5, 3, 4, 5])['\\\\'](new List([3, 4, 5])).equals(new List([3, 4, 5, 3, 4, 5])));
+            assert.ok(new List([5, 4, 3, 3, 4, 5, 3, 4, 5])['\\\\'](new List([3, 4, 5])).equals(new List([3, 4, 5, 3, 4, 5])));
+            assert.ok(new List([1, 2, 3])['\\\\'](new List([3, 4, 5])).equals(new List([1, 2])));
+        });
         it('.all()', () => {
             assert.equal(a.all(isOdd), false);
             assert.equal(a.all(smallerThan(10000)), true);

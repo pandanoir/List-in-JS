@@ -197,6 +197,16 @@ export default class List extends InfinityList {
             yield* arr;
         }
     }
+    '\\'(l) {
+        let res = this;
+        for (const val of l.generator()) {
+            res = res.delete(val);
+        }
+        return res;
+    }
+    '\\\\'(l) {
+        return this['\\'](l);
+    }
     all(f) {
         return this.map(f).and();
     }
