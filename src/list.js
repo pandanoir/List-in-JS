@@ -141,6 +141,19 @@ class InfinityList {
         };
         return res;
     }
+    unwords() {
+        const res = new InfinityList();
+        const gen = this.generator;
+        res.generator = function*() {
+            const iter = gen();
+            yield* iter.next().value;
+            for (const val of iter) {
+                yield ' ';
+                yield* val;
+            }
+        };
+        return res;
+    }
     words() {
         const res = new InfinityList();
         const gen = this.generator;
@@ -438,6 +451,14 @@ export default class List extends InfinityList {
             res += this.value[i] + '\n';
         }
         return new List([...res]);
+    }
+    unwords() {
+        const res = [];
+        for (let i = 0, _i = this.length; i < _i; i++) {
+            if (objToString.call(this.value[i]) !== '[object String]') throw Error('expected [String].');
+            res.push(this.value[i]);
+        }
+        return new List([...res.join(' ')])
     }
     unzipHelper(n) {
         const get = n => x => x['!!'] ? x['!!'](n) : x[n];

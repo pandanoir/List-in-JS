@@ -44,7 +44,10 @@ describe('list-in-js', () => {
             assert.ok(fib.takeWhile(x => x < 10).equals(new List([0, 1, 1, 2, 3, 5, 8])));
         });
         it('.unlines()', () => {
-            console.log(List.repeat('abc').unlines().take(10).equals(new List([...'abc\nabc\nab'])));
+            assert.ok(List.repeat('abc').unlines().take(10).equals(new List([...'abc\nabc\nab'])));
+        });
+        it('.unwords()', () => {
+            assert.ok(List.repeat('abc').unwords().take(10).equals(new List([...'abc abc ab'])));
         });
         it('["!!"]()', () => {
             assert.equal(fib['!!'](6), 8);
@@ -303,6 +306,12 @@ describe('list-in-js', () => {
             assert.ok(new List(['a', 'b', 'c']).unlines().equals(new List([...'a\nb\nc\n'])));
             assert.ok(new List(['']).unlines().equals(new List([...'\n'])));
             assert.ok(new List([]).unlines().equals(List.empty));
+        });
+        it('.unwords()', () => {
+            assert.ok(new List(['a', 'b', 'c']).unwords().equals(new List([...'a b c'])));
+            assert.ok(new List(['a', '', 'b', 'c']).unwords().equals(new List([...'a  b c'])));
+            assert.ok(new List(['']).unwords().equals(List.empty));
+            assert.ok(new List([]).unwords().equals(List.empty));
         });
         it('.unzip()', () => {
             assert.ok(new List([[1, 4], [2, 5], [3, 6]]).unzip().equals(new List([[1, 2, 3], [4, 5, 6]])));
