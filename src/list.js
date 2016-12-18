@@ -58,6 +58,13 @@ class InfinityList {
             return List.of(n).concat(this);
         }
     }
+    intersect(l) {
+        const res = [];
+        for (const val of this.generator()) {
+            if (l.any(x => x === val)) res.push(val);
+        }
+        return new List(res);
+    }
     intersperse(s) {
         const iter = this.generator();
         if (iter.next().done) return List.empty;

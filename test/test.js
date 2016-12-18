@@ -215,6 +215,11 @@ describe('list-in-js', () => {
             assert.ok(new List([0, 1, 2, 3]).insert(4).equals(new List([0, 1, 2, 3, 4])));
             assert.ok(new List([3, 5, 1, 2, 8, 2]).insert(4).equals(new List([3, 4, 5, 1, 2, 8, 2])));
         })
+        it('.intersect()', () => {
+            assert.ok(new List([1, 2, 3, 4, 5]).intersect(new List([3, 4, 5, 6, 7])).equals(new List([3, 4, 5])));
+            assert.ok(new List([5, 4, 3, 2, 1]).intersect(new List([3, 4, 5, 6, 7])).equals(new List([5, 4, 3])));
+            assert.ok(new List([1, 2, 2, 3, 4]).intersect(new List([6, 4, 4, 2])).equals(new List([2, 2, 4])));
+        })
         it('.intersperse()', () => {
             assert.ok(a.intersperse(0).equals(new List([1, 0, 2, 0, 3])));
             assert.ok(new List([[1], [2], [3]]).intercalate(List.of(0)).equals(new List([1, 0, 2, 0, 3])));
