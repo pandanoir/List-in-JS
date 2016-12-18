@@ -22,12 +22,12 @@ const a = new List([1, 2, 3]),
     g = a => a * 3,
     x = 100;
 
+const fib = List.iterate(a => [a[1], a[0] + a[1]], [0, 1]).map(x => x[0]);
+
 describe('list-in-js', () => {
     describe('InfinityList', () => {
         it('.tails()', () => {
-            assert.ok(List.iterate(a => [a[1], a[0] + a[1]], [0, 1])
-                .map(x => x[0])
-                .tails()
+            assert.ok(fib.tails()
                 .take(3)
                 .map(list => list.take(3)).equals(
                     new List([[0, 1, 1], [1, 1, 2], [1, 2, 3]])
@@ -35,13 +35,13 @@ describe('list-in-js', () => {
             );
         });
         it('.take()', () => {
-            assert.ok(List.iterate(a => [a[1], a[0] + a[1]], [0, 1]).map(x => x[0]).take(7).equals(new List([0, 1, 1, 2, 3, 5, 8])));
+            assert.ok(fib.take(7).equals(new List([0, 1, 1, 2, 3, 5, 8])));
         });
         it('.takeWhile()', () => {
-            assert.ok(List.iterate(a => [a[1], a[0] + a[1]], [0, 1]).map(x => x[0]).takeWhile(x => x < 10).equals(new List([0, 1, 1, 2, 3, 5, 8])));
+            assert.ok(fib.takeWhile(x => x < 10).equals(new List([0, 1, 1, 2, 3, 5, 8])));
         });
         it('["!!"]()', () => {
-            assert.equal(List.iterate(a => [a[1], a[0] + a[1]], [0, 1]).map(x => x[0])['!!'](6), 8);
+            assert.equal(fib['!!'](6), 8);
         });
     })
     describe('Setoid', () => {
@@ -190,6 +190,10 @@ describe('list-in-js', () => {
         it('.inits()', () => {
             assert.ok(a.inits().equals(new List([[], [1], [1, 2], [1, 2, 3]])));
         });
+        it('.insert()', () => {
+            assert.ok(new List([0, 1, 2, 3]).insert(4).equals(new List([0, 1, 2, 3, 4])));
+            assert.ok(new List([3, 5, 1, 2, 8, 2]).insert(4).equals(new List([3, 4, 5, 1, 2, 8, 2])));
+        })
         it('.intersperse()', () => {
             assert.ok(a.intersperse(0).equals(new List([1, 0, 2, 0, 3])));
             assert.ok(new List([[1], [2], [3]]).intercalate(List.of(0)).equals(new List([1, 0, 2, 0, 3])));

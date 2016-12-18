@@ -42,6 +42,13 @@ class InfinityList {
         if (this.generator().next().done) return List.empty;
         return this.init().inits().concat(this);
     }
+    insert(n) {
+        if (this.head() < n) {
+            return List.of(this.head()).concat(this.tail().insert(n));
+        } else {
+            return List.of(n).concat(this);
+        }
+    }
     intersperse(s) {
         const iter = this.generator();
         if (iter.next().done) return List.empty;
