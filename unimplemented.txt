@@ -20,9 +20,6 @@ elemIndex
 elemIndices
 findIndex
 findIndices
-(\)
-union
-intersect
 nubBy
 deleteFirstsBy
 unionBy

@@ -8,6 +8,7 @@ Methods of List behave as List of Haskell.
 Now List in JS supports methods below.
 
 * !!
+* \\\\
 * all
 * and
 * any
@@ -34,6 +35,7 @@ Now List in JS supports methods below.
 * inits
 * insert
 * intercalate
+* intersect
 * intersperse
 * isnull
 * last
@@ -64,6 +66,7 @@ Now List in JS supports methods below.
 * toArray
 * transpose
 * traverse
+* union
 * unlines
 * unwords
 * unzip
