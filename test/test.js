@@ -329,6 +329,11 @@ describe('list-in-js', () => {
             assert.ok(new List([1,2,2]).union(new List([1,3,3])).equals(new List([1,2,2,3])));
             assert.ok(new List([...'abcd']).union(new List([...'AaBbCcDdEe'])).equals(new List([...'abcdABCDEe'])));
         });
+        it('.unionBy()', () => {
+
+assert.ok(new List([1,2,3,4]).unionBy((x, y) => x * 3 === y, new List([4,6,9,10])).equals(new List([1, 2, 3, 4, 4, 10])));
+
+        });
         it('.unlines()', () => {
             assert.ok(new List(['a', 'b', 'c']).unlines().equals(new List([...'a\nb\nc\n'])));
             assert.ok(new List(['']).unlines().equals(new List([...'\n'])));

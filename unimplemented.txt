@@ -21,7 +21,6 @@ elemIndices
 findIndex
 findIndices
 deleteFirstsBy
-unionBy
 intersectBy
 groupBy
 insertBy

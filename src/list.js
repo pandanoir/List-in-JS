@@ -464,7 +464,14 @@ export default class List extends InfinityList {
         return this.map(f).sequence(of);
     }
     union(l) {
-        return this.concat(l.nub()['\\'](this));
+        return this.unionBy((x, y) => x === y, l);
+    }
+    unionBy(f, l) {
+        let res = l.nub();
+        for (const val of this.generator()) {
+            res = res.deleteBy(f, val);
+        }
+        return this.concat(res);
     }
     unlines() {
         let res = '';

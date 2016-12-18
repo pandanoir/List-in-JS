@@ -68,6 +68,7 @@ Now List in JS supports methods below.
 * transpose
 * traverse
 * union
+* unionBy
 * unlines
 * unwords
 * unzip
