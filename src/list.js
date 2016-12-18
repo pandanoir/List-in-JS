@@ -349,6 +349,14 @@ export default class List extends InfinityList {
     or() {
         return this.foldl((a, b) => a || b, false);
     }
+    permutations() {
+        let res = List.empty;
+        if (this.length === 0) return List.of(List.empty);
+        for (let i = 0, _i = this.length; i < _i; i++) {
+            res = res.concat(this.take(i).concat(this.drop(i + 1)).permutations().map(l => List.of(this.value[i]).concat(l)));
+        }
+        return res;
+    }
     product() {
         return this.foldl((a, b) => a * b, 1);
     }

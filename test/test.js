@@ -230,6 +230,9 @@ describe('list-in-js', () => {
             assert.equal(new List([false, false, false]).or(), false);
             assert.equal(new List([true, false, false]).or(), true);
         });
+        it('.permutations()', () => {
+            assert.ok(new List([1, 2, 3]).permutations().equals(new List([[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]])));
+        })
         it('.product()', () => {
             assert.equal(oneToTen.product(), 3628800);
         });

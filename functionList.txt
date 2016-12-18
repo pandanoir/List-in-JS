@@ -12,7 +12,7 @@ the implemented item has '-' on its head.
 - intercalate
 - transpose
 - subsequences
-permutations
+- permutations
 - foldl
 foldl'
 - foldl1
