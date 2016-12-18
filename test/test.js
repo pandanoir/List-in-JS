@@ -150,6 +150,9 @@ describe('list-in-js', () => {
             assert.ok(res4[0].equals(new List([])));
             assert.ok(res4[1].equals(new List([1, 2, 3])));
         });
+        it('.concat()', () => {
+            assert.ok(new List([...'abc']).concat(List.repeat('x')).take(8).equals(new List([...'abcxxxxx'])));
+        })
         it('.cycle()', () => {
             assert.ok(new List([...'ABC']).cycle().take(10).equals(new List([...'ABCABCABCA'])));
         });

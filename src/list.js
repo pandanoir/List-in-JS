@@ -161,7 +161,8 @@ export default class List extends InfinityList {
         return List.concat(this.map(f));
     }
     concat(b) {
-        return new List(this.value.concat(b.value));
+        if (b instanceof List) return new List(this.value.concat(b.value));
+        return super.concat(b);
     }
     cycle() {
         const res = new InfinityList();
