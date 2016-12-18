@@ -129,6 +129,18 @@ class InfinityList {
         }
         return new List(res);
     }
+    unlines() {
+        const res = new InfinityList();
+        const gen = this.generator;
+        res.generator = function*() {
+            const iter = gen();
+            for (const val of iter) {
+                yield* val;
+                yield '\n';
+            }
+        };
+        return res;
+    }
     words() {
         const res = new InfinityList();
         const gen = this.generator;
@@ -152,7 +164,7 @@ class InfinityList {
 export default class List extends InfinityList {
     constructor(_arr) {
         if (!Array.isArray(_arr)) {
-            throw Error('expect array.got ' + _arr);
+            throw Error('expect array. Got ' + _arr);
             return;
         }
         super();
@@ -418,6 +430,14 @@ export default class List extends InfinityList {
     }
     traverse(f, of) {
         return this.map(f).sequence(of);
+    }
+    unlines() {
+        let res = '';
+        for (let i = 0, _i = this.length; i < _i; i++) {
+            if (objToString.call(this.value[i]) !== '[object String]') throw Error('expected [String].');
+            res += this.value[i] + '\n';
+        }
+        return new List([...res]);
     }
     unzipHelper(n) {
         const get = n => x => x['!!'] ? x['!!'](n) : x[n];
