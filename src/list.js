@@ -380,9 +380,12 @@ export default class List extends InfinityList {
         else return this.head();
     }
     nub() {
+        return this.nubBy((x, y) => x === y);
+    }
+    nubBy(f) {
         if (this.length === 0) return List.empty;
         const x = this.head(), xs = this.tail();
-        return List.of(x).concat(xs.filter(y => x !== y).nub());
+        return List.of(x).concat(xs.filter(y => !f(x, y)).nubBy(f));
     }
     of(...args) {
         return new List(args);

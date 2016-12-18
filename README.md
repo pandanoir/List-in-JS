@@ -44,6 +44,7 @@ Now List in JS supports methods below.
 * maximum
 * minimum
 * nub
+* nubBy
 * null
 * of
 * or

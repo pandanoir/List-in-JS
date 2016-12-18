@@ -249,6 +249,9 @@ describe('list-in-js', () => {
         it('.nub()', () => {
             assert.ok(new List([1, 1, 2, 2, 2, 3, 5]).nub().equals(new List([1, 2, 3, 5])));
         });
+        it('.nubBy()', () => {
+            assert.ok(new List([2, 3, 5, 7, 8]).nubBy((x, y) => x + y === 10).equals(new List([2, 3, 5])));
+        });
         it('.or()', () => {
             assert.equal(new List([false, false, false]).or(), false);
             assert.equal(new List([true, false, false]).or(), true);
