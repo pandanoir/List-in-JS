@@ -207,6 +207,10 @@ export default class List extends InfinityList {
             yield* arr;
         }
     }
+    '!!'(n) {
+        if (n < 0) throw Error('!! got negative index.');
+        return this.value[n];
+    }
     '\\'(l) {
         let res = this;
         for (const val of l.generator()) {
