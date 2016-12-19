@@ -2,6 +2,7 @@ const objToString = Object.prototype.toString;
 class InfinityList {
     constructor(generator) {
         this.generator = generator;
+        this[Symbol.iterator] = generator;
     }
     '!!'(n) {
         if (n < 0) throw Error('!! got negative index.');
@@ -63,7 +64,7 @@ class InfinityList {
     }
     intersect(l) {
         const res = [];
-        for (const val of this.generator()) {
+        for (const val of this) {
             if (l.any(x => x === val)) res.push(val);
         }
         return new List(res);
@@ -137,8 +138,7 @@ class InfinityList {
     }
     takeWhile(f) {
         const res = [];
-        const iter = this.generator();
-        for (const val of iter) {
+        for (const val of this) {
             if (!f(val)) break;
             res.push(val);
         }
@@ -192,7 +192,6 @@ export default class List extends InfinityList {
             throw Error('expect array. Got ' + _arr);
             return;
         }
-        super();
         const arr = new Array(_arr.length);
         for (let i = 0, _i = _arr.length; i < _i; i++) {
             if (Array.isArray(_arr[i])) {
@@ -201,11 +200,11 @@ export default class List extends InfinityList {
                 arr[i] = _arr[i];
             }
         }
+        super(function*() {
+            yield* arr;
+        });
         this.value = arr;
         this.length = arr.length;
-        this.generator = function*() {
-            yield* arr;
-        }
     }
     '!!'(n) {
         if (n < 0) throw Error('!! got negative index.');
@@ -213,7 +212,7 @@ export default class List extends InfinityList {
     }
     '\\'(l) {
         let res = this;
-        for (const val of l.generator()) {
+        for (const val of l) {
             res = res.delete(val);
         }
         return res;
@@ -351,10 +350,9 @@ export default class List extends InfinityList {
         return this.value[this.value.length - 1];
     }
     lines() {
-        const iter = this.generator();
         const res = [];
         let line = '';
-        for (const val of iter) {
+        for (const val of this) {
             if (val === '\n') {
                 if (line !== '') {
                     res.push(line);
@@ -475,7 +473,7 @@ export default class List extends InfinityList {
     }
     unionBy(f, l) {
         let res = l.nub();
-        for (const val of this.generator()) {
+        for (const val of this) {
             res = res.deleteBy(f, val);
         }
         return this.concat(res);
@@ -511,11 +509,10 @@ export default class List extends InfinityList {
     unzip6() {return this.unzipHelper(6);}
     unzip7() {return this.unzipHelper(7);}
     words() {
-        const iter = this.generator();
         const res = [];
         const ws = /\s/;
         let word = '';
-        for (const val of iter) {
+        for (const val of this) {
             if (ws.test(val)) {
                 if (word !== '') {
                     res.push(word);
