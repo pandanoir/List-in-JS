@@ -54,7 +54,9 @@ Now List in JS supports methods below.
 * reduce
 * reverse
 * scanl
+* scanl1
 * scanr
+* scanr1
 * sequence
 * sort
 * sortBy

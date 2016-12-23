@@ -323,10 +323,10 @@ export default class List extends InfinityList {
         if (this.value.length === 0) return acc;
         return this.tail().foldl(f, f(acc, this.head()));
     }
-    foldl1(f, acc) {
+    foldl1(f) {
         return this.tail().foldl(f, this.head());
     }
-    foldr1(f, acc) {
+    foldr1(f) {
         return this.init().foldr(f, this.last());
     }
     init() {
@@ -416,8 +416,17 @@ export default class List extends InfinityList {
     scanl(f, acc) {
         return this.foldl((acc, x) => acc.concat(List.of(f(acc.last(), x))), List.of(acc));
     }
+    scanl1(f) {
+        if (this.length === 0) return List.empty;
+        return this.tail().foldl((acc, x) => acc.concat(List.of(f(acc.last(), x))), List.of(this.head()));
+    }
     scanr(f, acc) {
         return this.foldr((x, acc) => List.of(f(acc.head(), x)).concat(acc), List.of(acc));
+    }
+    scanr1(f) {
+        if (this.length <= 1) return new List(this.value);
+        const qs = this.tail().scanr1(f);
+        return List.of(f(qs.head(), this.head())).concat(qs);
     }
     sequence(of) {
         return this.foldr((m, ma) => m.chain(x => {

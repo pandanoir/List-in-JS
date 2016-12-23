@@ -1,7 +1,5 @@
 foldl'
 foldl1'
-scanl1
-scanr1
 mapAccumL
 mapAccumR
 unfoldr

@@ -307,9 +307,16 @@ describe('list-in-js', () => {
         it('.scanl()', () => {
             assert.ok(oneToTen.scanl((a, b) => a + b, 0).equals(new List([0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55])));
         });
+        it('.scanl1()', () => {
+            assert.ok(oneToTen.scanl1((a, b) => a + b).equals(new List([1, 3, 6, 10, 15, 21, 28, 36, 45, 55])));
+        });
         it('.scanr()', () => {
             assert.ok(new List([8, 12, 24, 4]).scanr((a, b) => b / a, 2).equals(new List([8, 1, 12, 2, 2])));
             assert.ok(new List([3, 6, 12, 4, 55, 11]).scanr(Math.max, 18).equals(new List([55, 55, 55, 55, 55, 18, 18])));
+        });
+        it('.scanr1()', () => {
+            assert.ok(new List([8, 12, 24, 4]).scanr1((a, b) => b / a).equals(new List([4, 2, 6, 4])));
+            assert.ok(new List([3, 6, 12, 4, 55, 11]).scanr1(Math.max).equals(new List([55, 55, 55, 55, 55, 11])));
         });
         it('.sequence()', () => {
             assert.ok(new List([[1], [2, 3], [4, 5]]).sequence().equals(new List([[1, 2, 4], [1, 2, 5], [1, 3, 4], [1, 3, 5]])));
