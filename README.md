@@ -64,6 +64,7 @@ Now List in JS supports methods below.
 * sort
 * sortBy
 * span
+* splitAt
 * subsequences
 * sum
 * tail

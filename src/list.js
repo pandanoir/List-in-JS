@@ -97,6 +97,9 @@ class InfinityList {
             return [List.of(this.head()).concat(ys), zs];
         } else return [List.empty, this];
     }
+    splitAt(n) {
+        return [this.take(n), this.drop(n)];
+    }
     tail() {
         const gen = this.generator;
         const res = new InfinityList(function*() {

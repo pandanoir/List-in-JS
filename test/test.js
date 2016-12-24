@@ -32,6 +32,11 @@ describe('list-in-js', () => {
         it('.lines()', () => {
             assert.ok(new List([...'aa\n']).cycle().lines().take(8).equals(new List(['aa', 'aa', 'aa', 'aa', 'aa', 'aa', 'aa', 'aa'])));
         });
+        it('.splitAt()', () => {
+            const res = fib.splitAt(7);
+            assert.ok(res[0].equals(new List([0, 1, 1, 2, 3, 5, 8])));
+            assert.ok(res[1].take(7).equals(new List([13, 21, 34, 55, 89, 144, 233])));
+        });
         it('.tails()', () => {
             assert.ok(fib.tails()
                 .take(3)

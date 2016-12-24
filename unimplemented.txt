@@ -1,7 +1,6 @@
 foldl'
 foldl1'
 unfoldr
-splitAt
 stripPrefix
 group
 isPrefixOf
