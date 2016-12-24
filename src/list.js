@@ -91,6 +91,16 @@ class InfinityList {
         });
         return res;
     }
+    map(f) {
+        const gen = this.generator;
+        const res = new InfinityList(function*() {
+            const iter = gen();
+            for (const val of iter) {
+                yield f(val);
+            }
+        });
+        return res;
+    }
     span(f) {
         if (f(this.head())) {
             const [ys, zs] = this.tail().span(f);
@@ -117,16 +127,6 @@ class InfinityList {
                 yield tail;
                 tail = tail.tail();
                 if (tail.generator().next().done) break;
-            }
-        });
-        return res;
-    }
-    map(f) {
-        const gen = this.generator;
-        const res = new InfinityList(function*() {
-            const iter = gen();
-            for (const val of iter) {
-                yield f(val);
             }
         });
         return res;
