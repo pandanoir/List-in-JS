@@ -40,6 +40,9 @@ Now List in JS supports methods below.
 * intersect
 * intersperse
 * isnull
+* isInfixOf
+* isPrefixOf
+* isSuffixOf
 * last
 * lines
 * map

@@ -3,9 +3,6 @@ foldl1'
 unfoldr
 stripPrefix
 group
-isPrefixOf
-isSuffixOf
-isInfixOf
 notElem
 lookup
 find

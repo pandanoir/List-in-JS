@@ -261,6 +261,17 @@ describe('list-in-js', () => {
             assert.equal(a.isnull(), false);
             assert.equal(List.empty.isnull(), true);
         });
+        it('.isInfixOf()', () => {
+            assert.ok(new List([1, 2, 3, 4]).isInfixOf(oneToTen));
+            assert.ok(new List([7, 8, 9, 10]).isInfixOf(oneToTen));
+        });
+        it('.isPrefixOf()', () => {
+            assert.ok(new List([1, 2, 3, 4]).isPrefixOf(oneToTen));
+        });
+        it('.isSuffixOf()', () => {
+            assert.ok(!(new List([1, 2, 3, 4]).isSuffixOf(oneToTen)));
+            assert.ok(new List([7, 8, 9, 10]).isSuffixOf(oneToTen));
+        });
         it('.null()', () => {
             assert.equal(a.null(), false);
             assert.equal(List.empty.null(), true);

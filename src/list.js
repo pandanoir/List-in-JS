@@ -26,10 +26,6 @@ class InfinityList {
         });
         return res;
     }
-    foldr(f, acc) {
-        if (this.generator().next().done) return acc;
-        return f(this.head(), this.tail().foldr(f, acc));
-    }
     head() {
         const iter = this.generator();
         return iter.next().value;
@@ -227,7 +223,7 @@ export default class List extends InfinityList {
         return this.map(f).and();
     }
     and() {
-        return this.foldl((a, b) => a && b, true);
+        return this.foldr((a, b) => a && b, true);
     }
     any(f) {
         return this.map(f).or();
@@ -335,6 +331,10 @@ export default class List extends InfinityList {
     foldl1(f) {
         return this.tail().foldl(f, this.head());
     }
+    foldr(f, acc) {
+        if (this.generator().next().done) return acc;
+        return f(this.head(), this.tail().foldr(f, acc));
+    }
     foldr1(f) {
         return this.init().foldr(f, this.last());
     }
@@ -350,6 +350,20 @@ export default class List extends InfinityList {
     }
     isnull() {
         return this.equals(List.empty);
+    }
+    isInfixOf(l) {
+        if (this.length === 0) return true;
+        return l.tails().any(l => this.isPrefixOf(l));
+    }
+    isPrefixOf(l) {
+        if (this.length === 0) return true;
+        if (l.ength === 0) return false;
+        return l.head() === this.head() && this.tail().isPrefixOf(l.tail());
+    }
+    isSuffixOf(l) {
+        if (this.length === 0) return true;
+        if (l.ength === 0) return false;
+        return l.last() === this.last() && this.init().isSuffixOf(l.init());
     }
     null() {
         // same as isnull()
@@ -421,7 +435,7 @@ export default class List extends InfinityList {
         return new List(args);
     }
     or() {
-        return this.foldl((a, b) => a || b, false);
+        return this.foldr((a, b) => a || b, false);
     }
     permutations() {
         let res = List.empty;
