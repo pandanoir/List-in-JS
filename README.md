@@ -43,6 +43,8 @@ Now List in JS supports methods below.
 * last
 * lines
 * map
+* mapAccumL
+* mapAccumR
 * maximum
 * minimum
 * nub

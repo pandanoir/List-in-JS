@@ -273,6 +273,40 @@ describe('list-in-js', () => {
         it('.map()', () => {
             assert.ok(new List([1, 2, 3]).map(x => x * 3).equals(new List([3, 6, 9])));
         });
+        it('.mapAccumL()', () => {
+            const res1 = new List([9, 6, 3]).mapAccumL((x, y) => [x, x * y], 5);
+            assert.equal(res1[0], 5);
+            assert.ok(res1[1].equals(new List([45, 30, 15])));
+
+            const res2 = new List([2, 4, 8]).mapAccumL((x, y) => [x + y, x * y], 5);
+            assert.equal(res2[0], 19);
+            assert.ok(res2[1].equals(new List([10, 28, 88])));
+
+            const res3 = new List([2, 4, 8]).mapAccumL((x, y) => [x, x], 5);
+            assert.equal(res3[0], 5);
+            assert.ok(res3[1].equals(new List([5, 5, 5])));
+
+            const res4 = new List([2, 4, 8]).mapAccumL((x, y) => [y, y], 5);
+            assert.equal(res4[0], 8);
+            assert.ok(res4[1].equals(new List([2, 4, 8])));
+        });
+        it('.mapAccumR()', () => {
+            const res1 = new List([9, 6, 3]).mapAccumR((x, y) => [x, x * y], 5);
+            assert.equal(res1[0], 5);
+            assert.ok(res1[1].equals(new List([45, 30, 15])));
+
+            const res2 = new List([2, 4, 8]).mapAccumR((x, y) => [x + y, x * y], 5);
+            assert.equal(res2[0], 19);
+            assert.ok(res2[1].equals(new List([34, 52, 40])));
+
+            const res3 = new List([2, 4, 8]).mapAccumR((x, y) => [x, x], 5);
+            assert.equal(res3[0], 5);
+            assert.ok(res3[1].equals(new List([5, 5, 5])));
+
+            const res4 = new List([2, 4, 8]).mapAccumR((x, y) => [y, y], 5);
+            assert.equal(res4[0], 2);
+            assert.ok(res4[1].equals(new List([2, 4, 8])));
+        });
         it('.maximum()', () => {
             assert.equal(a.maximum() === 3 && a.reverse().maximum() === 3, true);
         });

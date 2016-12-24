@@ -1,7 +1,5 @@
 foldl'
 foldl1'
-mapAccumL
-mapAccumR
 unfoldr
 splitAt
 stripPrefix

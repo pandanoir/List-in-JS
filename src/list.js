@@ -376,6 +376,22 @@ export default class List extends InfinityList {
         }
         return new List(res);
     }
+    mapAccumL(f, x) {
+        const res = [];
+        for (let i = 0, _i = this.length, y; i < _i; i++) {
+            [x, y] = f(x, this.value[i]);
+            res.push(y);
+        }
+        return [x, new List(res)];
+    }
+    mapAccumR(f, x) {
+        const res = [];
+        for (let i = this.length - 1, y; i >= 0; i--) {
+            [x, y] = f(x, this.value[i]);
+            res.push(y);
+        }
+        return [x, new List(res.reverse())];
+    }
     maximum() {
         if (this.value.length === 0) return undefined;
         if (this.value.length === 1) return this.value[0];
