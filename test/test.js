@@ -198,6 +198,9 @@ describe('list-in-js', () => {
         it('.dropWhile()', () => {
             assert.ok(oneToTen.dropWhile(smallerThan(4)).equals(new List([4, 5, 6, 7, 8, 9, 10])));
         });
+        it('.dropWhileEnd()', () => {
+            assert.ok(oneToTen.dropWhileEnd(biggerThan(5)).equals(new List([1, 2, 3, 4, 5])));
+        });
         it('.elem()', () => {
             assert.equal(a.elem(1), true);
             assert.equal(a.elem(4), false);

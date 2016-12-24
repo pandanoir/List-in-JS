@@ -22,6 +22,7 @@ Now List in JS supports methods below.
 * deleteBy
 * drop
 * dropWhile
+* dropWhileEnd
 * elem
 * empty
 * equals

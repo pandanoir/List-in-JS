@@ -4,7 +4,6 @@ mapAccumL
 mapAccumR
 unfoldr
 splitAt
-dropWhileEnd
 stripPrefix
 group
 isPrefixOf

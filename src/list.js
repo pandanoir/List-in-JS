@@ -287,6 +287,12 @@ export default class List extends InfinityList {
         }
         return this;
     }
+    dropWhileEnd(f) {
+        if (f(this.last())) {
+            return this.init().dropWhileEnd(f);
+        }
+        return this;
+    }
     elem(x) {
         return this.any(y => x === y);
     }
