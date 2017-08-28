@@ -410,15 +410,17 @@ export default class List extends InfinityList {
         return [x, new List(res.reverse())];
     }
     maximum() {
-        if (this.value.length === 0) return undefined;
-        if (this.value.length === 1) return this.value[0];
+        // if (this.value.length === 0) return undefined;
+        // if (this.value.length === 1) return this.value[0];
+        if (this.value.length <= 1) return this.value[0];
         const max = this.tail().maximum();
         if (max > this.head()) return max;
         else return this.head();
     }
     minimum() {
-        if (this.value.length === 0) return undefined;
-        if (this.value.length === 1) return this.value[0];
+        // if (this.value.length === 0) return undefined;
+        // if (this.value.length === 1) return this.value[0];
+        if (this.value.length <= 1) return this.value[0];
         const min = this.tail().minimum();
         if (min < this.head()) return min;
         else return this.head();
