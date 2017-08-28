@@ -52,11 +52,8 @@ class InfinityList {
         return this.insertBy((x, y) => x - y, n);
     }
     insertBy(f, n) {
-        if (f(this.head(), n) < 0) {
-            return List.of(this.head()).concat(this.tail().insertBy(f, n));
-        } else {
-            return List.of(n).concat(this);
-        }
+        if (f(this.head(), n) < 0) return List.of(this.head()).concat(this.tail().insertBy(f, n));
+        return List.of(n).concat(this);
     }
     intersect(l) {
         const res = [];
@@ -101,7 +98,8 @@ class InfinityList {
         if (f(this.head())) {
             const [ys, zs] = this.tail().span(f);
             return [List.of(this.head()).concat(ys), zs];
-        } else return [List.empty, this];
+        }
+        return [List.empty, this];
     }
     splitAt(n) {
         return [this.take(n), this.drop(n)];
@@ -281,15 +279,11 @@ export default class List extends InfinityList {
         return this.tail().drop(n - 1);
     }
     dropWhile(f) {
-        if (f(this.head())) {
-            return this.tail().dropWhile(f);
-        }
+        if (f(this.head())) return this.tail().dropWhile(f);
         return this;
     }
     dropWhileEnd(f) {
-        if (f(this.last())) {
-            return this.init().dropWhileEnd(f);
-        }
+        if (f(this.last())) return this.init().dropWhileEnd(f);
         return this;
     }
     elem(x) {
@@ -496,9 +490,7 @@ export default class List extends InfinityList {
     }
     toArray() {
         return this.reduce((acc, x) => {
-            if (x instanceof List) {
-                return acc.concat([x.toArray()]);
-            }
+            if (x instanceof List) return acc.concat([x.toArray()]);
             return acc.concat(x);
         }, []);
     }
