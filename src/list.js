@@ -357,12 +357,12 @@ export default class List extends InfinityList {
     }
     isPrefixOf(l) {
         if (this.length === 0) return true;
-        if (l.ength === 0) return false;
+        if (l.length === 0) return false;
         return l.head() === this.head() && this.tail().isPrefixOf(l.tail());
     }
     isSuffixOf(l) {
         if (this.length === 0) return true;
-        if (l.ength === 0) return false;
+        if (l.length === 0) return false;
         return l.last() === this.last() && this.init().isSuffixOf(l.init());
     }
     null() {
