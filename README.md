@@ -1,7 +1,7 @@
-#About
+# About
 List in JS provides List like List of Haskell. List in JS implements [Fantasy Land Specification](https://github.com/fantasyland/fantasy-land). List is a Setoid, a Semigroup, a Monoid, a Functor, an Applicative Functor, Foldable, Traversable, a Chain and a Monad.
 
-#Methods
+# Methods
 Methods of List behave as List of Haskell.
 
 ## instance methods
